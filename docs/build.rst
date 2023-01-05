@@ -22,6 +22,7 @@ Build
     . .venv/bin/activate
     pip install -U pip
     poetry install
+    npm clean-install
     make npm-build poetry-build
 
 Following the above a ``sdist`` and ``wheel`` will be in the ``dist/`` directory.
