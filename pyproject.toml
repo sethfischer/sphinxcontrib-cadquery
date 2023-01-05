@@ -1,0 +1,82 @@
+[tool.poetry]
+name = "sphinxcontrib-cadquery"
+version = "0.1.0"
+description = "Sphinx extension for rendering CadQuery models."
+packages = [
+    {include = "sphinxcontrib"},
+]
+include = [
+    "sphinxcontrib/cadquery/static/dist/vtk-lite.js*",
+]
+authors = [
+    "Seth Fischer <seth@fischer.nz>",
+]
+license = "Apache-2.0"
+readme = "README.rst"
+homepage = "https://github.com/sethfischer/sphinxcontrib-cadquery"
+repository = "https://github.com/sethfischer/sphinxcontrib-cadquery.git"
+documentation = "https://sphinxcontrib-cadquery.readthedocs.io/"
+keywords = [
+    "cad",
+    "cadquery",
+    "parametric",
+    "programmatic",
+    "sphinx",
+    "svg",
+    "vtk",
+    "vtk.js",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Framework :: Sphinx :: Extension",
+    "Framework :: Sphinx",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python",
+    "Programming Language :: Python",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Documentation",
+    "Topic :: Scientific/Engineering",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/sethfischer/sphinxcontrib-cadquery/issues"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+Sphinx = "^5.3.0"
+
+[tool.poetry.group.dev.dependencies]
+cadquery = {version = "^2.2.0b2", allow-prereleases = true}
+cadquery-ocp = {version = "^7.6.3a0", allow-prereleases = true}
+casadi = {version = "^3.5.6rc2", allow-prereleases = true}
+black = "^22.12.0"
+isort = "^5.11.4"
+sphinx-rtd-theme = "^1.1.1"
+
+[tool.poetry.group.cq-editor]
+optional = true
+
+[tool.poetry.group.cq-editor.dependencies]
+cq-editor = {git = "https://github.com/CadQuery/CQ-editor.git", rev = "4b461fe195d0a4e99b9a6c43b7e1fe0cb4c5e77d"}
+logbook = "^1.5.3"
+pyqt5 = "^5.15.7"
+pyqtgraph = "^0.13.1"
+spyder = "^5.4.1"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
