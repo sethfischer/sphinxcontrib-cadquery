@@ -78,6 +78,7 @@ spyder = "^5.4.1"
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.0"
+major_version_zero = true
 tag_format = "$version"
 annotated_tag = true
 version_files = [
