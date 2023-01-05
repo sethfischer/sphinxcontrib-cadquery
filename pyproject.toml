@@ -6,6 +6,7 @@ packages = [
     {include = "sphinxcontrib"},
 ]
 include = [
+    "CHANGELOG.md",
     "sphinxcontrib/cadquery/static/dist/vtk-lite.js*",
 ]
 authors = [
@@ -60,6 +61,7 @@ cadquery = {version = "^2.2.0b2", allow-prereleases = true}
 cadquery-ocp = {version = "^7.6.3a0", allow-prereleases = true}
 casadi = {version = "^3.5.6rc2", allow-prereleases = true}
 black = "^22.12.0"
+commitizen = "^2.39.1"
 isort = "^5.11.4"
 sphinx-rtd-theme = "^1.1.1"
 
@@ -72,6 +74,16 @@ logbook = "^1.5.3"
 pyqt5 = "^5.15.7"
 pyqtgraph = "^0.13.1"
 spyder = "^5.4.1"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "$version"
+annotated_tag = true
+version_files = [
+    "pyproject.toml",
+    "sphinxcontrib/cadquery/__init__.py",
+]
 
 [tool.isort]
 profile = "black"
