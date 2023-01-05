@@ -17,6 +17,7 @@ sphinxcontrib-cadquery
     usage
     examples
     related
+    build
 
 
 Indices and tables

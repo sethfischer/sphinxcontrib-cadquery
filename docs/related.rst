@@ -10,7 +10,7 @@ CadQuery/cadquery
 :Renderer: `vtk.js`_
 :Exporter: ``cadquery.occ_impl.assembly.toJSON``
 
-This was modified for the initial release of sphinxcontrib-cadquery.
+This was modified for the initial release of *sphinxcontrib-cadquery*.
 
 
 CadQuery/sphinxcadquery

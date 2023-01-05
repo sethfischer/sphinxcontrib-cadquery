@@ -19,6 +19,14 @@ Installation
     pip install sphinxcontrib-cadquery
 
 
+.. note::
+
+    It is not possible to install *sphinxcontrib-cadquery* from VCS i.e.
+    ``python -m pip install git+https://github.com/…``, or
+    ``poetry add git+https://github.com/…`` as this circumvents the :doc:`build
+    process<build>`.
+
+
 Configuration
 -------------
 
