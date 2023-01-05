@@ -10,7 +10,7 @@ module.exports = {
         {
           from: "*.js",
           context: path.resolve(__dirname, "node_modules", "vtk.js"),
-          to: path.resolve(__dirname, "sphinxcontrib/cadquery/static/node-modules"),
+          to: path.resolve(__dirname, "sphinxcontrib/cadquery/static/dist"),
         },
       ],
     }),
