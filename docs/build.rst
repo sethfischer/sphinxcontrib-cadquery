@@ -14,7 +14,7 @@ Prerequisites
 Build
 -----
 
-.. code-block:: console
+.. code-block:: text
 
     git clone https://github.com/sethfischer/sphinxcontrib-cadquery.git
     cd sphinxcontrib-cadquery
@@ -35,14 +35,14 @@ The built release can be install into a project as follows.
 
 .. rubric:: Poetry
 
-.. code-block:: console
+.. code-block:: text
 
     poetry add path/to/dist/sphinxcontrib_cadquery-0.1.0.tar.gz
 
 
 .. rubric:: Pip
 
-.. code-block:: console
+.. code-block:: text
 
     pip install path/to/dist/sphinxcontrib_cadquery-0.1.0.tar.gz
 
