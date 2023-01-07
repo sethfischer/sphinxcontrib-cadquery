@@ -39,10 +39,12 @@ Enable the extension in your Sphinx ``conf.py`` file:
     ]
 
 
+.. _usage-directives:
+
 Directives
 ----------
 
-.. rst:directive:: .. cadquery::
+.. rst:directive:: .. cadquery-vtk::
 
     Render a CadQuery model using `kitware/vtk.js`_.
 
@@ -50,16 +52,22 @@ Directives
 
     .. code-block:: rst
 
-        .. cadquery::
+        .. cadquery-vtk::
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
 
     .. code-block:: rst
 
-        .. cadquery::
+        .. cadquery-vtk::
             :height: 100px
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
+
+    The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
+    and :func:`cadquery.occ_impl.assembly.toJSON` [`source`_].
+
+    .. versionadded:: 0.1.2
+        Identical to depreciated :rst:dir:`cadquery` directive.
 
     .. rubric:: Options
 
@@ -84,7 +92,7 @@ Directives
         Width of render.  Value is used for the CSS ``width`` property.
 
 
-.. rst:directive:: .. cq_plot::
+.. rst:directive:: .. cadquery-svg::
 
     Render a CadQuery model using SVG.
 
@@ -92,18 +100,24 @@ Directives
 
     .. code-block:: rst
 
-        .. cq_plot::
+        .. cadquery-svg::
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
             show_object(result)
 
     .. code-block:: rst
 
-        .. cq_plot::
+        .. cadquery-svg::
             :align: center
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
             show_object(result)
+
+    The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
+    and the :doc:`CadQuery SVG exporter <cadquery:importexport>` .
+
+    .. versionadded:: 0.1.2
+      Identical to depreciated :rst:dir:`cq_plot` directive.
 
     .. rubric:: Options
 
@@ -113,4 +127,17 @@ Directives
         Alignment of render. Value is used for the CSS ``text-align`` property.
 
 
+.. rst:directive:: .. cadquery::
+
+    .. deprecated:: 0.1.1
+       Use the :rst:dir:`cadquery-vtk` directive instead.
+
+
+.. rst:directive:: .. cq_plot::
+
+    .. deprecated:: 0.1.1
+       Use the :rst:dir:`cadquery-svg` directive instead.
+
+
 .. _`kitware/vtk.js`: https://kitware.github.io/vtk-js/
+.. _`source`: https://cadquery.readthedocs.io/en/latest/_modules/cadquery/occ_impl/assembly.html
