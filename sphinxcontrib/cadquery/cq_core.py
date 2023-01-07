@@ -14,9 +14,7 @@ SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 
 import traceback
 from json import dumps
-from pathlib import Path
 from textwrap import indent
-from uuid import uuid1 as uuid
 
 from cadquery import Assembly, Color, Compound, Sketch, cqgi, exporters
 from cadquery.occ_impl.assembly import toJSON
@@ -253,7 +251,6 @@ class cq_directive(Directive):
             traceback.print_exc()
             out_svg = traceback.format_exc()
 
-        # now out
         # Now start generating the lines of output
         lines = []
 
@@ -293,9 +290,6 @@ class cq_directive_vtk(Directive):
         options = self.options
         content = self.content
         state_machine = self.state_machine
-        env = self.state.document.settings.env
-        build_path = Path(env.app.builder.outdir)
-        out_path = build_path / "_static"
 
         # only consider inline snippets
         plot_code = "\n".join(content)
@@ -322,11 +316,6 @@ class cq_directive_vtk(Directive):
         except Exception:
             traceback.print_exc()
             assy = Assembly(Compound.makeText("CQGI error", 10, 5))
-
-        # save vtkjs to static
-        fname = Path(str(uuid()))
-        exporters.assembly.exportVTKJS(assy, out_path / fname)
-        fname = str(fname) + ".zip"
 
         # add the output
         lines = []
