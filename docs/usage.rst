@@ -7,14 +7,14 @@ Installation
 
 .. rubric:: Poetry
 
-.. code-block:: console
+.. code-block:: text
 
     poetry add sphinxcontrib-cadquery
 
 
 .. rubric:: Pip
 
-.. code-block:: console
+.. code-block:: text
 
     pip install sphinxcontrib-cadquery
 
