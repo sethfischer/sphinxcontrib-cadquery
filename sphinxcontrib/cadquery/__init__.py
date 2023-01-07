@@ -44,8 +44,11 @@ def setup(app: Sphinx):
 
         app._sphinxcontrib_cadquery_vtkjs_installed = True
 
-    app.add_directive("cq_plot", cq_directive)
-    app.add_directive("cadquery", cq_directive_vtk)
+    app.add_directive("cadquery-svg", cq_directive)
+    app.add_directive("cadquery-vtk", cq_directive_vtk)
+
+    app.add_directive("cq_plot", cq_directive)  # deprecated, use cadquery-svg
+    app.add_directive("cadquery", cq_directive_vtk)  # deprecated, use cadquery-vtk
 
     return {
         "version": __version__,
