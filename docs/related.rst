@@ -27,5 +27,10 @@ CadQuery/sphinxcadquery
     * ``cadquery.exporters`` (TJS)
 
 
+.. rubric:: Caveats
+
+* Will not render :class:`cadquery.assembly.Assembly`
+
+
 .. _`vtk.js`: https://kitware.github.io/vtk-js/
 .. _`three.js`: https://threejs.org/
