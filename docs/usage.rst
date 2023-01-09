@@ -27,9 +27,6 @@ Installation
     process<build>`.
 
 
-Configuration
--------------
-
 Enable the extension in your Sphinx ``conf.py`` file:
 
 .. code-block:: python
@@ -40,6 +37,18 @@ Enable the extension in your Sphinx ``conf.py`` file:
 
 
 .. _usage-directives:
+
+
+Configuration
+-------------
+
+.. confval:: cadquery_include_source
+
+    A boolean that decides whether to show CadQuery source code.
+    Default is ``True``.
+
+    .. versionadded:: 0.2.0
+
 
 Directives
 ----------
@@ -66,7 +75,7 @@ Directives
     The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
     and :func:`cadquery.occ_impl.assembly.toJSON` [`source`_].
 
-    .. versionadded:: 0.1.2
+    .. versionadded:: 0.2.0
         Identical to depreciated :rst:dir:`cadquery` directive.
 
     .. rubric:: Options
@@ -116,7 +125,7 @@ Directives
     The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
     and the :doc:`CadQuery SVG exporter <cadquery:importexport>` .
 
-    .. versionadded:: 0.1.2
+    .. versionadded:: 0.2.0
       Identical to depreciated :rst:dir:`cq_plot` directive.
 
     .. rubric:: Options
@@ -129,13 +138,13 @@ Directives
 
 .. rst:directive:: .. cadquery::
 
-    .. deprecated:: 0.1.1
+    .. deprecated:: 0.2.0
        Use the :rst:dir:`cadquery-vtk` directive instead.
 
 
 .. rst:directive:: .. cq_plot::
 
-    .. deprecated:: 0.1.1
+    .. deprecated:: 0.2.0
        Use the :rst:dir:`cadquery-svg` directive instead.
 
 
