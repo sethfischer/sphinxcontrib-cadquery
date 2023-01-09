@@ -27,3 +27,12 @@ html_static_path = ["_static"]
 intersphinx_mapping = {
     "cadquery": ("https://cadquery.readthedocs.io/en/latest/", None),
 }
+
+
+def setup(app):
+    app.add_object_type(
+        "confval",
+        "confval",
+        objname="configuration value",
+        indextemplate="pair: %s; configuration value",
+    )

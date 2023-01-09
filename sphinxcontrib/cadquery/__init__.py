@@ -50,6 +50,8 @@ def setup(app: Sphinx):
     app.add_directive("cq_plot", cq_directive)  # deprecated, use cadquery-svg
     app.add_directive("cadquery", cq_directive_vtk)  # deprecated, use cadquery-vtk
 
+    app.add_config_value("cadquery_include_source", True, "env")
+
     return {
         "version": __version__,
     }

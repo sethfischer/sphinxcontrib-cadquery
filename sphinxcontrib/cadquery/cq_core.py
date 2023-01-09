@@ -229,6 +229,7 @@ class cq_directive(Directive):
         options = self.options
         content = self.content
         state_machine = self.state_machine
+        env = self.state.document.settings.env
 
         # only consider inline snippets
         plot_code = "\n".join(content)
@@ -263,9 +264,10 @@ class cq_directive(Directive):
 
         lines.extend((template % locals()).split("\n"))
 
-        lines.extend(["::", ""])
-        lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
-        lines.append("")
+        if env.config.cadquery_include_source:
+            lines.extend(["::", ""])
+            lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
+            lines.append("")
 
         if len(lines):
             state_machine.insert_input(lines, state_machine.input_lines.source(0))
@@ -290,6 +292,7 @@ class cq_directive_vtk(Directive):
         options = self.options
         content = self.content
         state_machine = self.state_machine
+        env = self.state.document.settings.env
 
         # only consider inline snippets
         plot_code = "\n".join(content)
@@ -334,9 +337,10 @@ class cq_directive_vtk(Directive):
             ).splitlines()
         )
 
-        lines.extend(["::", ""])
-        lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
-        lines.append("")
+        if env.config.cadquery_include_source:
+            lines.extend(["::", ""])
+            lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
+            lines.append("")
 
         if len(lines):
             state_machine.insert_input(lines, state_machine.input_lines.source(0))
