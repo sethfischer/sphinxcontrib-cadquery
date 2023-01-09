@@ -55,7 +55,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
 Sphinx = "^5.3.0"
-ipython = "^8.0.0"
+ipython = ">=7.31.1"
 
 [tool.poetry.group.dev.dependencies]
 cadquery = {version = "^2.2.0b2", allow-prereleases = true}
