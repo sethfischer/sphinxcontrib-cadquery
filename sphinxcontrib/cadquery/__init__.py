@@ -7,7 +7,7 @@ from sphinx.application import Sphinx
 
 from .cq_core import cq_directive, cq_directive_vtk, rendering_code
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 _ROOT_DIR = Path(__file__).absolute().parent
 
