@@ -5,15 +5,16 @@ from pathlib import Path
 
 from sphinx.application import Sphinx
 
-from .cq_core import cq_directive, cq_directive_vtk, rendering_code
+from .cq_core import cq_directive, cq_directive_vtk
 
 __version__ = "0.2.1"
 
 _ROOT_DIR = Path(__file__).absolute().parent
 
-_FILES = [
-    "static/dist/vtk-lite.js",
-]
+_FILES = {
+    "static/dist/vtk-lite.js": {"priority": 90},
+    "static/render.js": {"priority": 100},
+}
 
 
 def setup(app: Sphinx):
@@ -29,15 +30,13 @@ def setup(app: Sphinx):
         app_outdir_dist = app_static_directory / "dist"
         app_outdir_dist.mkdir(parents=True, exist_ok=True)
 
-        app.add_js_file(None, body=rendering_code, id="rendering_code")
-
-        for filename in _FILES:
+        for filename, metadata in _FILES.items():
             source = _ROOT_DIR / filename
             destination = app_outdir_dist / Path(filename).name
 
             app.add_js_file(
                 str(destination.relative_to(app_static_directory)),
-                priority=100,
+                priority=metadata["priority"],
             )
 
             shutil.copyfile(source, destination)
