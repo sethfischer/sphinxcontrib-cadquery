@@ -14,41 +14,12 @@ SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 
 import traceback
 from json import dumps
-from textwrap import indent
 
 from cadquery import Assembly, Color, Compound, Sketch, cqgi, exporters
 from cadquery.occ_impl.assembly import toJSON
-from cadquery.occ_impl.jupyter_tools import DEFAULT_COLOR, TEMPLATE_RENDER
+from cadquery.occ_impl.jupyter_tools import DEFAULT_COLOR
 from docutils.parsers.rst import Directive, directives
-
-template = """
-
-.. raw:: html
-
-    <div class="cq" style="text-align:%(txt_align)s;float:left;">
-        %(out_svg)s
-    </div>
-    <div style="clear:both;">
-    </div>
-
-"""
-
-template_vtk = """
-
-.. raw:: html
-
-    <div class="cq-vtk"
-     style="text-align:{txt_align};float:left;border: 1px solid #ddd; width:{width}; height:{height}">
-       <script>
-       var parent_element = {element};
-       var data = {data};
-       render(data, parent_element);
-       </script>
-    </div>
-    <div style="clear:both;">
-    </div>
-
-"""
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 
 class cq_directive(Directive):
@@ -66,6 +37,11 @@ class cq_directive(Directive):
         content = self.content
         state_machine = self.state_machine
         env = self.state.document.settings.env
+
+        jinja_env = Environment(
+            loader=PackageLoader("sphinxcontrib.cadquery"),
+            autoescape=select_autoescape(),
+        )
 
         # only consider inline snippets
         plot_code = "\n".join(content)
@@ -88,25 +64,20 @@ class cq_directive(Directive):
             traceback.print_exc()
             out_svg = traceback.format_exc()
 
-        # Now start generating the lines of output
-        lines = []
-
-        # get rid of new lines
-        out_svg = out_svg.replace("\n", "")
-
         txt_align = "left"
         if "align" in options:
             txt_align = options["align"]
 
-        lines.extend((template % locals()).split("\n"))
+        rst_markup = jinja_env.get_template("svg.rst.jinja").render(
+            include_source=env.config.cadquery_include_source,
+            source=plot_code,
+            out_svg=out_svg,
+            txt_align=txt_align,
+        )
 
-        if env.config.cadquery_include_source:
-            lines.extend(["::", ""])
-            lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
-            lines.append("")
-
-        if len(lines):
-            state_machine.insert_input(lines, state_machine.input_lines.source(0))
+        state_machine.insert_input(
+            rst_markup.splitlines(), state_machine.input_lines.source(0)
+        )
 
         return []
 
@@ -129,6 +100,11 @@ class cq_directive_vtk(Directive):
         content = self.content
         state_machine = self.state_machine
         env = self.state.document.settings.env
+
+        jinja_env = Environment(
+            loader=PackageLoader("sphinxcontrib.cadquery"),
+            autoescape=select_autoescape(),
+        )
 
         # only consider inline snippets
         plot_code = "\n".join(content)
@@ -156,29 +132,20 @@ class cq_directive_vtk(Directive):
             traceback.print_exc()
             assy = Assembly(Compound.makeText("CQGI error", 10, 5))
 
-        # add the output
-        lines = []
-
         data = dumps(toJSON(assy))
 
-        lines.extend(
-            template_vtk.format(
-                code=indent(TEMPLATE_RENDER.format(), "    "),
-                data=data,
-                ratio="null",
-                element="document.currentScript.parentNode",
-                txt_align=options.get("align", "left"),
-                width=options.get("width", "100%"),
-                height=options.get("height", "500px"),
-            ).splitlines()
+        rst_markup = jinja_env.get_template("vtk.rst.jinja").render(
+            include_source=env.config.cadquery_include_source,
+            source=plot_code,
+            data=data,
+            element="document.currentScript.parentNode",
+            txt_align=options.get("align", "left"),
+            width=options.get("width", "100%"),
+            height=options.get("height", "500px"),
         )
 
-        if env.config.cadquery_include_source:
-            lines.extend(["::", ""])
-            lines.extend(["    %s" % row.rstrip() for row in plot_code.split("\n")])
-            lines.append("")
-
-        if len(lines):
-            state_machine.insert_input(lines, state_machine.input_lines.source(0))
+        state_machine.insert_input(
+            rst_markup.splitlines(), state_machine.input_lines.source(0)
+        )
 
         return []

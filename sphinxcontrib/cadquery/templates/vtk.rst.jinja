@@ -1,0 +1,17 @@
+.. raw:: html
+
+    <div class="cq-vtk" style="text-align:{{txt_align}};float:left;border: 1px solid #ddd; width:{{width}}; height:{{height}}">
+       <script>
+           var parent_element = {{element}};
+           var data = {{data}};
+           render(data, parent_element);
+       </script>
+    </div>
+    <div style="clear:both;">
+    </div>
+
+{% if include_source %}
+.. code-block:: python
+
+    {{source|indent(4)}}
+{% endif %}
