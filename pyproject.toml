@@ -63,8 +63,11 @@ jinja2 = ">=3.0"
 cadquery = {version = "^2.2.0b2", allow-prereleases = true}
 cadquery-ocp = {version = "^7.6.3a0", allow-prereleases = true}
 casadi = {version = "^3.5.6rc2", allow-prereleases = true}
+
 black = "^22.12.0"
 commitizen = "^2.39.1"
+doc8 = "^0.10.1"
+flake8 = "^6.0.0"
 isort = "^5.11.4"
 sphinx-rtd-theme = "^1.1.1"
 

@@ -2,7 +2,7 @@
 sphinxcontrib-cadquery
 ======================
 
-|docs-status|
+|lint-status| |docs-status|
 
 
 A `Sphinx`_ extension for rendering `CadQuery`_ models.
@@ -12,6 +12,10 @@ A `Sphinx`_ extension for rendering `CadQuery`_ models.
 .. _Sphinx: https://www.sphinx-doc.org/
 .. _CadQuery: https://cadquery.readthedocs.io/
 
+
+.. |lint-status| image:: https://github.com/sethfischer/sphinxcontrib-cadquery/actions/workflows/lint.yml/badge.svg
+    :target: https://github.com/sethfischer/sphinxcontrib-cadquery/actions/workflows/lint.yml
+    :alt: Lint status
 .. |docs-status| image:: https://readthedocs.org/projects/sphinxcontrib-cadquery/badge/?version=latest
     :target: https://sphinxcontrib-cadquery.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation status
