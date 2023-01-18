@@ -19,6 +19,9 @@ from cadquery import Assembly, Color, Compound, Sketch, cqgi, exporters
 from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
 from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
+from sphinx.util import logging
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_COLOR = [1, 0.8, 0, 1]
 
@@ -140,3 +143,27 @@ class CqVtkDirective(Directive):
         )
 
         return []
+
+
+class LegacyCqSvgDirective(CqSvgDirective):
+    """Legacy SVG directive."""
+
+    def run(self):
+        """Deprecate legacy SVG directive."""
+        logger.info(
+            "use of the cq_plot directive is deprecated, "
+            'replace ".. cq_plot::" with ".. cadquery-svg::"'
+        )
+        return super().run()
+
+
+class LegacyCqVtkDirective(CqVtkDirective):
+    """Legacy VTK directive."""
+
+    def run(self):
+        """Deprecate legacy VTK directive."""
+        logger.info(
+            "direct use of the cadquery directive is deprecated, "
+            'replace ".. cadquery::" with ".. cadquery-vtk::"'
+        )
+        return super().run()
