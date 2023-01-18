@@ -5,7 +5,12 @@ from pathlib import Path
 
 from sphinx.application import Sphinx
 
-from .cq_core import CqSvgDirective, CqVtkDirective
+from .cq_core import (
+    CqSvgDirective,
+    CqVtkDirective,
+    LegacyCqSvgDirective,
+    LegacyCqVtkDirective,
+)
 
 __version__ = "0.2.1"
 
@@ -46,8 +51,8 @@ def setup(app: Sphinx):
     app.add_directive("cadquery-svg", CqSvgDirective)
     app.add_directive("cadquery-vtk", CqVtkDirective)
 
-    app.add_directive("cq_plot", CqSvgDirective)  # deprecated, use cadquery-svg
-    app.add_directive("cadquery", CqVtkDirective)  # deprecated, use cadquery-vtk
+    app.add_directive("cq_plot", LegacyCqSvgDirective)  # deprecated, use cadquery-svg
+    app.add_directive("cadquery", LegacyCqVtkDirective)  # deprecated, use cadquery-vtk
 
     app.add_config_value("cadquery_include_source", True, "env")
 
