@@ -1,13 +1,18 @@
 .. raw:: html
 
-    <div class="sphinxcontrib-cadquery-svg" style="text-align:{{align}};float:left;">
-        {{svg_document|indent(8)}}
-    </div>
-    <div style="clear:both;">
-    </div>
+    <div style="margin-bottom: 24px">
+        <div class="cadquery-svg" style="text-align:{{align}};float:left;">
+            {{svg_document|indent(8)}}
+        </div>
+        <div style="clear:both;">
+        </div>
 
 {% if include_source %}
 .. code-block:: python
 
     {{source|indent(4)}}
 {% endif %}
+
+.. raw:: html
+
+    </div>
