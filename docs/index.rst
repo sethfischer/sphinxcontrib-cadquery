@@ -34,7 +34,7 @@ Refer to the :ref:`usage-directives` section for more details.
     :caption: Contents
 
     usage
-    examples
+    examples/index
     related
     build
 

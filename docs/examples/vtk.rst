@@ -1,29 +1,20 @@
-========
-Examples
-========
+======
+VTK.js
+======
+
+:rst:dir:`VTK.js <cadquery-vtk>` renderer examples.
+
 
 Simple rectangular plate
 ------------------------
-
-.. rubric:: vtk.js
 
 .. cadquery-vtk::
 
     result = cadquery.Workplane("front").box(2, 2, 0.5)
 
 
-.. rubric:: SVG
-
-.. cadquery-svg::
-
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
-    show_object(result)
-
-
 Assembly
 --------
-
-.. rubric:: vtk.js
 
 .. cadquery-vtk::
 
