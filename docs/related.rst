@@ -12,7 +12,7 @@ CadQuery/cadquery
 :Renderer: `vtk.js`_
 :Exporters:
     * ``cadquery.occ_impl.assembly.toJSON``
-    * :doc:`CadQuery SVG exporter <cadquery:importexport>`
+    * :doc:`CadQuery SVG exporter <cadquery-latest:importexport>`
 
 This was modified for the initial release of *sphinxcontrib-cadquery*.
 
@@ -29,7 +29,7 @@ CadQuery/sphinxcadquery
 
 .. rubric:: Caveats
 
-* Will not render :class:`cadquery.assembly.Assembly`
+* Will not render :class:`cadquery-latest:cadquery.assembly.Assembly`
 
 
 .. _`vtk.js`: https://kitware.github.io/vtk-js/

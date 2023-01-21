@@ -72,7 +72,7 @@ Directives
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
 
-    The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
+    The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
     and :func:`cadquery.occ_impl.assembly.toJSON` [`source`_].
 
     .. versionadded:: 0.2.0
@@ -122,8 +122,8 @@ Directives
             result = cadquery.Workplane("front").box(2, 2, 0.5)
             show_object(result)
 
-    The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery:cqgi>`
-    and the :doc:`CadQuery SVG exporter <cadquery:importexport>` .
+    The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
+    and the :doc:`CadQuery SVG exporter <cadquery-latest:importexport>` .
 
     .. versionadded:: 0.2.0
       Identical to depreciated :rst:dir:`cq_plot` directive.
