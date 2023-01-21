@@ -2,7 +2,7 @@
 sphinxcontrib-cadquery
 ======================
 
-|lint-status| |docs-status|
+|pypi-version| |lint-status| |docs-status|
 
 
 A `Sphinx`_ extension for rendering `CadQuery`_ models.
@@ -13,6 +13,9 @@ A `Sphinx`_ extension for rendering `CadQuery`_ models.
 .. _CadQuery: https://cadquery.readthedocs.io/
 
 
+.. |pypi-version| image:: https://img.shields.io/pypi/v/sphinxcontrib-cadquery
+    :target: https://pypi.org/project/sphinxcontrib-cadquery/
+    :alt: PyPI version
 .. |lint-status| image:: https://github.com/sethfischer/sphinxcontrib-cadquery/actions/workflows/lint.yml/badge.svg
     :target: https://github.com/sethfischer/sphinxcontrib-cadquery/actions/workflows/lint.yml
     :alt: Lint status
