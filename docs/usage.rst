@@ -53,9 +53,12 @@ Configuration
 Directives
 ----------
 
-.. rst:directive:: .. cadquery-vtk::
+.. rst:directive:: .. cadquery-vtk:: [path_name]
 
     Render a CadQuery model using `kitware/vtk.js`_.
+
+    The *path_name* argument is a path to a CadQuery source file,
+    relative to the Sphinx content root.
 
     Examples:
 
@@ -71,6 +74,10 @@ Directives
             :height: 100px
 
             result = cadquery.Workplane("front").box(2, 2, 0.5)
+
+    .. code-block:: rst
+
+        .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
 
     The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
     and :func:`cadquery.occ_impl.assembly.toJSON` [`source`_].

@@ -30,3 +30,9 @@ Assembly
     assembly.add(cone, name="cone1", color=cq.Color("blue"))
 
     show_object(assembly)
+
+
+Load from file
+--------------
+
+.. cadquery-vtk:: ../examples/simple-rectangular-plate.py
