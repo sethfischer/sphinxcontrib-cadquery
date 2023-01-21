@@ -25,7 +25,7 @@ html_static_path = ["_static"]
 
 
 intersphinx_mapping = {
-    "cadquery": ("https://cadquery.readthedocs.io/en/latest/", None),
+    "cadquery-latest": ("https://cadquery.readthedocs.io/en/latest/", None),
 }
 
 
