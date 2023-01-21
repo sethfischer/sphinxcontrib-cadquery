@@ -14,6 +14,7 @@ SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 
 import traceback
 from json import dumps
+from pathlib import Path
 
 from cadquery import Assembly, Color, Compound, Sketch, cqgi, exporters
 from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
@@ -31,7 +32,7 @@ class CqSvgDirective(Directive):
 
     has_content = True
     required_arguments = 0
-    optional_arguments = 1
+    optional_arguments = 0
     option_spec = {
         "align": directives.unchanged,
     }
@@ -82,7 +83,7 @@ class CqVtkDirective(Directive):
 
     has_content = True
     required_arguments = 0
-    optional_arguments = 4
+    optional_arguments = 1
     option_spec = {
         "align": directives.unchanged,
         "height": directives.length_or_unitless,
@@ -102,7 +103,14 @@ class CqVtkDirective(Directive):
             autoescape=select_autoescape(),
         )
 
-        model_source = "\n".join(content)
+        if len(self.arguments):
+            path_name = Path(env.app.builder.srcdir) / self.arguments[0]
+            path_name = path_name.resolve()
+            if not path_name.is_file():
+                logger.error(f"File does not exist: {path_name}")
+            model_source = path_name.read_text()
+        else:
+            model_source = "\n".join(content)
 
         try:
             result = cqgi.parse(model_source).build()
