@@ -131,8 +131,8 @@ class CqVtkDirective(Directive):
                 raise result.exception
 
         except Exception:
-            traceback.print_exc()
             assembly = Assembly(Compound.makeText("CQGI error", 10, 5))
+            raise self.error(f"CadQuery CQGI error. {traceback.format_exc()}")
 
         vtk_json = dumps(cq_assembly_toJSON(assembly))
 
