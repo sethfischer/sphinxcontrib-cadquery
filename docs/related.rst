@@ -11,7 +11,7 @@ CadQuery/cadquery
 :PyPI: Included in CadQuery core.
 :Renderer: `vtk.js`_
 :Exporters:
-    * ``cadquery.occ_impl.assembly.toJSON``
+    * :func:`cadquery-latest:cadquery.occ_impl.assembly.toJSON`
     * :doc:`CadQuery SVG exporter <cadquery-latest:importexport>`
 
 This was modified for the initial release of *sphinxcontrib-cadquery*.
