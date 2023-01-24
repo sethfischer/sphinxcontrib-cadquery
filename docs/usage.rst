@@ -57,6 +57,9 @@ Directives
 
     Render a CadQuery model using `kitware/vtk.js`_.
 
+    VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
+    and :func:`cadquery-latest:cadquery.occ_impl.assembly.toJSON`.
+
     The *path_name* argument is a path to a CadQuery source file,
     relative to the Sphinx content root.
 
@@ -79,8 +82,6 @@ Directives
 
         .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
 
-    The VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
-    and :func:`cadquery.occ_impl.assembly.toJSON` [`source`_].
 
     .. versionadded:: 0.2.0
         Identical to depreciated :rst:dir:`cadquery` directive.
@@ -156,4 +157,3 @@ Directives
 
 
 .. _`kitware/vtk.js`: https://kitware.github.io/vtk-js/
-.. _`source`: https://cadquery.readthedocs.io/en/latest/_modules/cadquery/occ_impl/assembly.html
