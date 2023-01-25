@@ -12,12 +12,12 @@ SPDX-FileContributor: Miguel Sánchez de León Peque <peque@neosit.es>
 SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 """
 
-import traceback
 from json import dumps
 from pathlib import Path
 
-from cadquery import Assembly, Color, Compound, Sketch, cqgi, exporters
+from cadquery import Assembly, Color, Sketch, cqgi, exporters
 from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
+from docutils import nodes
 from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.util import logging
@@ -60,9 +60,11 @@ class CqSvgDirective(Directive):
             else:
                 raise result.exception
 
-        except Exception:
-            traceback.print_exc()
-            svg_document = traceback.format_exc()
+        except Exception as err:
+            message = f"CQGI error in {self.name} directive: {err}."
+            p = nodes.paragraph("", "", nodes.Text(message))
+            state_machine.reporter.error(message)
+            return [p]
 
         rst_markup = jinja_env.get_template("svg.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
@@ -130,9 +132,11 @@ class CqVtkDirective(Directive):
             else:
                 raise result.exception
 
-        except Exception:
-            assembly = Assembly(Compound.makeText("CQGI error", 10, 5))
-            raise self.error(f"CadQuery CQGI error. {traceback.format_exc()}")
+        except Exception as err:
+            message = f"CQGI error in {self.name} directive: {err}."
+            p = nodes.paragraph("", "", nodes.Text(message))
+            state_machine.reporter.error(message)
+            return [p]
 
         vtk_json = dumps(cq_assembly_toJSON(assembly))
 
