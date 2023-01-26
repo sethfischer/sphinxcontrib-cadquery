@@ -128,7 +128,7 @@ class CqVtkDirective(Directive, Cqgi):
 
         shape = self._select_shape(result, options.get("select", "result"))
         assembly = self._to_assembly(shape)
-        vtk_json = dumps(cq_assembly_toJSON(assembly))
+        vtk_json = dumps(cq_assembly_toJSON(assembly), separators=(",", ":"))
 
         jinja_env = Environment(
             loader=PackageLoader("sphinxcontrib.cadquery"),
