@@ -36,3 +36,24 @@ Load from file
 --------------
 
 .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
+
+
+Sketch
+------
+
+.. cadquery-vtk::
+
+    import cadquery as cq
+
+    result = (
+        cq.Sketch()
+        .trapezoid(4, 3, 90)
+        .vertices()
+        .circle(0.5, mode="s")
+        .reset()
+        .vertices()
+        .fillet(0.25)
+        .reset()
+        .rarray(0.6, 1, 5, 1)
+        .slot(1.5, 0.4, mode="s", angle=90)
+    )
