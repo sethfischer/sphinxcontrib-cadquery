@@ -113,6 +113,11 @@ Directives
 
     Render a CadQuery model using SVG.
 
+    .. tip::
+
+        The CadQuery source must call
+        :meth:`show_object() <cadquery-latest:cadquery.cqgi.ScriptCallback.show_object>`.
+
     Examples:
 
     .. code-block:: rst
