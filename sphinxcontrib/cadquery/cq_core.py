@@ -27,7 +27,21 @@ logger = logging.getLogger(__name__)
 DEFAULT_COLOR = [1, 0.8, 0, 1]
 
 
-class CqSvgDirective(Directive):
+class Cqgi:
+    """Execute source using CQGI."""
+
+    @staticmethod
+    def _cqgi_parse(model_source: str):
+        """Execute source using CQGI."""
+        result = cqgi.parse(model_source).build()
+
+        if not result.success:
+            raise result.exception
+
+        return result
+
+
+class CqSvgDirective(Directive, Cqgi):
     """CadQuery SVG directive."""
 
     has_content = True
@@ -44,27 +58,22 @@ class CqSvgDirective(Directive):
         state_machine = self.state_machine
         env = self.state.document.settings.env
 
-        jinja_env = Environment(
-            loader=PackageLoader("sphinxcontrib.cadquery"),
-            autoescape=select_autoescape(),
-        )
-
         model_source = "\n".join(content)
 
         try:
-            result = cqgi.parse(model_source).build()
-            if result.success:
-                svg_document = exporters.getSVG(
-                    exporters.toCompound(result.first_result.shape)
-                )
-            else:
-                raise result.exception
-
+            result = self._cqgi_parse(model_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
             state_machine.reporter.error(message)
             return [p]
+
+        svg_document = exporters.getSVG(exporters.toCompound(result.first_result.shape))
+
+        jinja_env = Environment(
+            loader=PackageLoader("sphinxcontrib.cadquery"),
+            autoescape=select_autoescape(),
+        )
 
         rst_markup = jinja_env.get_template("svg.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
@@ -80,7 +89,7 @@ class CqSvgDirective(Directive):
         return []
 
 
-class CqVtkDirective(Directive):
+class CqVtkDirective(Directive, Cqgi):
     """CadQuery VTK directive."""
 
     has_content = True
@@ -100,11 +109,6 @@ class CqVtkDirective(Directive):
         state_machine = self.state_machine
         env = self.state.document.settings.env
 
-        jinja_env = Environment(
-            loader=PackageLoader("sphinxcontrib.cadquery"),
-            autoescape=select_autoescape(),
-        )
-
         if len(self.arguments):
             path_name = Path(env.app.builder.srcdir) / self.arguments[0]
             path_name = path_name.resolve()
@@ -115,30 +119,21 @@ class CqVtkDirective(Directive):
             model_source = "\n".join(content)
 
         try:
-            result = cqgi.parse(model_source).build()
-
-            if result.success:
-                if result.first_result:
-                    shape = result.first_result.shape
-                else:
-                    shape = result.env[options.get("select", "result")]
-
-                if isinstance(shape, Assembly):
-                    assembly = shape
-                elif isinstance(shape, Sketch):
-                    assembly = Assembly(shape._faces, color=Color(*DEFAULT_COLOR))
-                else:
-                    assembly = Assembly(shape, color=Color(*DEFAULT_COLOR))
-            else:
-                raise result.exception
-
+            result = self._cqgi_parse(model_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
             state_machine.reporter.error(message)
             return [p]
 
+        shape = self._select_shape(result, options.get("select", "result"))
+        assembly = self._to_assembly(shape)
         vtk_json = dumps(cq_assembly_toJSON(assembly))
+
+        jinja_env = Environment(
+            loader=PackageLoader("sphinxcontrib.cadquery"),
+            autoescape=select_autoescape(),
+        )
 
         rst_markup = jinja_env.get_template("vtk.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
@@ -155,6 +150,24 @@ class CqVtkDirective(Directive):
         )
 
         return []
+
+    @staticmethod
+    def _select_shape(result, select: str):
+        """Select shape from CQGI environment."""
+        if result.first_result:
+            return result.first_result.shape
+
+        return result.env[select]
+
+    @staticmethod
+    def _to_assembly(shape):
+        """Convert shape to assembly."""
+        if isinstance(shape, Assembly):
+            return shape
+        elif isinstance(shape, Sketch):
+            return Assembly(shape._faces, color=Color(*DEFAULT_COLOR))
+
+        return Assembly(shape, color=Color(*DEFAULT_COLOR))
 
 
 class LegacyCqSvgDirective(CqSvgDirective):
