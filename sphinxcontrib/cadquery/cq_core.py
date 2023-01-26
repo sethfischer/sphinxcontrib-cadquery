@@ -28,12 +28,12 @@ DEFAULT_COLOR = [1, 0.8, 0, 1]
 
 
 class Cqgi:
-    """Execute source using CQGI."""
+    """Execute script source using CQGI."""
 
     @staticmethod
-    def _cqgi_parse(model_source: str):
-        """Execute source using CQGI."""
-        result = cqgi.parse(model_source).build()
+    def _cqgi_parse(script_source: str):
+        """Execute script source using CQGI."""
+        result = cqgi.parse(script_source).build()
 
         if not result.success:
             raise result.exception
@@ -58,10 +58,10 @@ class CqSvgDirective(Directive, Cqgi):
         state_machine = self.state_machine
         env = self.state.document.settings.env
 
-        model_source = "\n".join(content)
+        script_source = "\n".join(content)
 
         try:
-            result = self._cqgi_parse(model_source)
+            result = self._cqgi_parse(script_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
@@ -72,7 +72,7 @@ class CqSvgDirective(Directive, Cqgi):
             compound = exporters.toCompound(result.first_result.shape)
         except AttributeError as err:
             raise self.error(
-                f"{err} Does your model source include a call to `show_object()`?"
+                f"{err} Does your script source include a call to `show_object()`?"
             )
 
         svg_document = exporters.getSVG(compound)
@@ -84,7 +84,7 @@ class CqSvgDirective(Directive, Cqgi):
 
         rst_markup = jinja_env.get_template("svg.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
-            source=model_source,
+            script_source=script_source,
             svg_document=svg_document,
             align=options.get("align", "left"),
         )
@@ -121,12 +121,12 @@ class CqVtkDirective(Directive, Cqgi):
             path_name = path_name.resolve()
             if not path_name.is_file():
                 logger.error(f"File does not exist: {path_name}")
-            model_source = path_name.read_text()
+            script_source = path_name.read_text()
         else:
-            model_source = "\n".join(content)
+            script_source = "\n".join(content)
 
         try:
-            result = self._cqgi_parse(model_source)
+            result = self._cqgi_parse(script_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
@@ -144,7 +144,7 @@ class CqVtkDirective(Directive, Cqgi):
 
         rst_markup = jinja_env.get_template("vtk.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
-            source=model_source,
+            script_source=script_source,
             vtk_json=vtk_json,
             element="document.currentScript.parentNode",
             align=options.get("align", "left"),
