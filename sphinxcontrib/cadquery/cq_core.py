@@ -68,7 +68,14 @@ class CqSvgDirective(Directive, Cqgi):
             state_machine.reporter.error(message)
             return [p]
 
-        svg_document = exporters.getSVG(exporters.toCompound(result.first_result.shape))
+        try:
+            compound = exporters.toCompound(result.first_result.shape)
+        except AttributeError as err:
+            raise self.error(
+                f"{err} Does your model source include a call to `show_object()`?"
+            )
+
+        svg_document = exporters.getSVG(compound)
 
         jinja_env = Environment(
             loader=PackageLoader("sphinxcontrib.cadquery"),
