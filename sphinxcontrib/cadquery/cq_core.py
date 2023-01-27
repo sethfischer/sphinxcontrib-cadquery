@@ -60,6 +60,7 @@ class CqSvgDirective(Directive, Cqgi):
         state_machine = self.state_machine
         env = self.state.document.settings.env
 
+        self.assert_has_content()
         script_source = "\n".join(content)
 
         try:
@@ -108,18 +109,10 @@ class CqVtkDirective(Directive, Cqgi):
     def run(self):
         """Generate VTK render of CadQuery model."""
         options = self.options
-        content = self.content
         state_machine = self.state_machine
         env = self.state.document.settings.env
 
-        if len(self.arguments):
-            path_name = Path(env.app.builder.srcdir) / self.arguments[0]
-            path_name = path_name.resolve()
-            if not path_name.is_file():
-                logger.error(f"File does not exist: {path_name}")
-            script_source = path_name.read_text()
-        else:
-            script_source = "\n".join(content)
+        script_source = self._script_source()
 
         try:
             result = self._cqgi_parse(script_source)
@@ -148,6 +141,26 @@ class CqVtkDirective(Directive, Cqgi):
         )
 
         return []
+
+    def _script_source(self):
+        """Get script source."""
+        env = self.state.document.settings.env
+
+        if len(self.arguments):
+            path_name = Path(env.app.builder.srcdir) / self.arguments[0]
+            path_name = path_name.resolve()
+            if not path_name.is_file():
+                logger.error(f"File does not exist: {path_name}")
+
+            return path_name.read_text()
+
+        if not self.content:
+            raise self.error(
+                f"{self.name} Expected script source as content"
+                " as path name not provided as first argument."
+            )
+
+        return "\n".join(self.content)
 
     @staticmethod
     def _select_shape(result, select: str):
