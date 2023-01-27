@@ -127,26 +127,11 @@ Directives
             result = cadquery.Workplane("front").box(2, 2, 0.5)
             show_object(result)
 
-    .. code-block:: rst
-
-        .. cadquery-svg::
-            :align: center
-
-            result = cadquery.Workplane("front").box(2, 2, 0.5)
-            show_object(result)
-
     The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
     and the :doc:`CadQuery SVG exporter <cadquery-latest:importexport>` .
 
     .. versionadded:: 0.2.0
       Identical to depreciated :rst:dir:`cq_plot` directive.
-
-    .. rubric:: Options
-
-    .. rst:directive:option:: align
-        :type: left|right|center|justify|initial|inherit (optional, default = "left")
-
-        Alignment of render. Value is used for the CSS ``text-align`` property.
 
 
 .. rst:directive:: .. cadquery::

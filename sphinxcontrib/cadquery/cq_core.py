@@ -52,13 +52,10 @@ class CqSvgDirective(Directive, Cqgi):
     has_content = True
     required_arguments = 0
     optional_arguments = 0
-    option_spec = {
-        "align": directives.unchanged,
-    }
+    option_spec = {}
 
     def run(self):
         """Generate SVG render of CadQuery model."""
-        options = self.options
         content = self.content
         state_machine = self.state_machine
         env = self.state.document.settings.env
@@ -86,7 +83,6 @@ class CqSvgDirective(Directive, Cqgi):
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
             svg_document=svg_document,
-            align=options.get("align", "left"),
         )
 
         state_machine.insert_input(
