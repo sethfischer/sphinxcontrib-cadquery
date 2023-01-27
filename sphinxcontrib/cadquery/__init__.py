@@ -28,25 +28,29 @@ def setup(app: Sphinx):
     setup.config = app.config
     setup.confdir = app.confdir
 
-    vtkjs_is_installed = getattr(app, "_sphinxcontrib_cadquery_vtkjs_installed", False)
+    assets_installed = getattr(app, "_sphinxcontrib_cadquery_assets_installed", False)
 
-    if not vtkjs_is_installed:
+    if not assets_installed:
         app_static_directory = Path(app.outdir) / "_static"
         app_outdir_dist = app_static_directory / "dist"
         app_outdir_dist.mkdir(parents=True, exist_ok=True)
 
         for filename, metadata in _JS_FILES.items():
-            source = _ROOT_DIR / filename
-            destination = app_outdir_dist / Path(filename).name
+            js_source = _ROOT_DIR / filename
+            js_destination = app_outdir_dist / Path(filename).name
 
             app.add_js_file(
-                str(destination.relative_to(app_static_directory)),
+                str(js_destination.relative_to(app_static_directory)),
                 priority=metadata["priority"],
             )
 
-            shutil.copyfile(source, destination)
+            shutil.copyfile(js_source, js_destination)
 
-        app._sphinxcontrib_cadquery_vtkjs_installed = True
+        css_destination = app_static_directory / "cadquery.css"
+        app.add_css_file(str(css_destination.relative_to(app_static_directory)))
+        shutil.copyfile(_ROOT_DIR / "static/cadquery.css", css_destination)
+
+        app._sphinxcontrib_cadquery_assets_installed = True
 
     app.add_directive("cadquery-svg", CqSvgDirective)
     app.add_directive("cadquery-vtk", CqVtkDirective)

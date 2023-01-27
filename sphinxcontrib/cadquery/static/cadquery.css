@@ -1,0 +1,15 @@
+.cadquery-align-left {
+    float: left;
+}
+
+.cadquery-align-right {
+    float: right;
+}
+
+.cadquery-align-none {
+    float: none;
+}
+
+.cadquery-align-center {
+    margin: 0px auto;
+}

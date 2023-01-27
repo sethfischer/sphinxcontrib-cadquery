@@ -1,14 +1,12 @@
 .. raw:: html
 
-    <div style="margin-bottom: 24px">
-        <div class="cadquery-vtk" style="text-align:{{align}};float:left;border: 1px solid #ddd; width:{{width}}; height:{{height}}">
+    <div class="cadquery-container cadquery-align-{{align}}" style="margin-bottom: 24px; width:{{width}};">
+        <div class="cadquery-vtk" style="height:{{height}};border: 1px solid #ddd;">
             <script>
                 var parent_element = {{element}};
                 var data = {{vtk_json}};
                 render(data, parent_element);
             </script>
-        </div>
-        <div style="clear:both;">
         </div>
 
 {% if include_source %}
@@ -20,3 +18,4 @@
 .. raw:: html
 
     </div>
+    <div style="clear:both;"></div>
