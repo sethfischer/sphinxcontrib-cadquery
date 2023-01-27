@@ -142,7 +142,7 @@ class CqVtkDirective(Directive, Cqgi):
             script_source=script_source,
             vtk_json=vtk_json,
             element="document.currentScript.parentNode",
-            align=options.get("align", "left"),
+            align=options.get("align", "none"),
             width=options.get("width", "100%"),
             height=options.get("height", "500px"),
         )

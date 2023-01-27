@@ -89,9 +89,9 @@ Directives
     .. rubric:: Options
 
     .. rst:directive:option:: align
-        :type: left|right|center|justify|initial|inherit (optional, default = "left")
+        :type: left|right|center|none (optional, default = "none")
 
-        Alignment of render. Value is used for the CSS ``text-align`` property.
+        Alignment of render.
 
     .. rst:directive:option:: height
         :type: length or unitless (optional, default = 500px)

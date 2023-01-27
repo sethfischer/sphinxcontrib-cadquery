@@ -57,3 +57,39 @@ Sketch
         .rarray(0.6, 1, 5, 1)
         .slot(1.5, 0.4, mode="s", angle=90)
     )
+
+
+Size and alignment
+------------------
+
+Align center
+~~~~~~~~~~~~
+
+.. cadquery-vtk::
+    :height: 100px
+    :width: 200px
+    :align: center
+
+    result = cadquery.Workplane("front").box(2, 2, 0.5)
+
+
+Align left
+~~~~~~~~~~
+
+.. cadquery-vtk::
+    :height: 100px
+    :width: 200px
+    :align: left
+
+    result = cadquery.Workplane("front").box(2, 2, 0.5)
+
+
+Align right
+~~~~~~~~~~~
+
+.. cadquery-vtk::
+    :height: 100px
+    :width: 200px
+    :align: right
+
+    result = cadquery.Workplane("front").box(2, 2, 0.5)
