@@ -26,6 +26,11 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_COLOR = [1, 0.8, 0, 1]
 
+_JINJA_ENV = Environment(
+    loader=PackageLoader("sphinxcontrib.cadquery"),
+    autoescape=select_autoescape(),
+)
+
 
 class Cqgi:
     """Execute script source using CQGI."""
@@ -77,12 +82,7 @@ class CqSvgDirective(Directive, Cqgi):
 
         svg_document = exporters.getSVG(compound)
 
-        jinja_env = Environment(
-            loader=PackageLoader("sphinxcontrib.cadquery"),
-            autoescape=select_autoescape(),
-        )
-
-        rst_markup = jinja_env.get_template("svg.rst.jinja").render(
+        rst_markup = _JINJA_ENV.get_template("svg.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
             svg_document=svg_document,
@@ -137,12 +137,7 @@ class CqVtkDirective(Directive, Cqgi):
         assembly = self._to_assembly(shape)
         vtk_json = dumps(cq_assembly_toJSON(assembly), separators=(",", ":"))
 
-        jinja_env = Environment(
-            loader=PackageLoader("sphinxcontrib.cadquery"),
-            autoescape=select_autoescape(),
-        )
-
-        rst_markup = jinja_env.get_template("vtk.rst.jinja").render(
+        rst_markup = _JINJA_ENV.get_template("vtk.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
             vtk_json=vtk_json,
