@@ -16,3 +16,7 @@ lint: lint-python
 .PHONY: lint-python
 lint-python:
 	./$@.sh
+
+.PHONY: lint-mypy
+lint-mypy:
+	mypy -p sphinxcontrib

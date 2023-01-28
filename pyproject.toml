@@ -70,7 +70,9 @@ commitizen = "^2.39.1"
 doc8 = "^0.10.1"
 flake8 = "^6.0.0"
 isort = "^5.11.4"
+mypy = "^0.991"
 sphinx-rtd-theme = "^1.1.1"
+types-docutils = "^0.19.1.2"
 
 [tool.poetry.group.cq-editor]
 optional = true
@@ -96,6 +98,10 @@ version_files = [
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+
+[tool.mypi]
+python_version = "3.9"
+packages = "sphinxcontrib"
 
 [build-system]
 requires = ["poetry-core"]
