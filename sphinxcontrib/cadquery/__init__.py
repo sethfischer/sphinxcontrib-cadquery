@@ -24,10 +24,6 @@ _JS_FILES = {
 
 def setup(app: Sphinx):
     """Sphinx setup."""
-    setup.app = app
-    setup.config = app.config
-    setup.confdir = app.confdir
-
     assets_installed = getattr(app, "_sphinxcontrib_cadquery_assets_installed", False)
 
     if not assets_installed:
@@ -50,7 +46,7 @@ def setup(app: Sphinx):
         app.add_css_file(str(css_destination.relative_to(app_static_directory)))
         shutil.copyfile(_ROOT_DIR / "static/cadquery.css", css_destination)
 
-        app._sphinxcontrib_cadquery_assets_installed = True
+        setattr(app, "_sphinxcontrib_cadquery_assets_installed", True)
 
     app.add_directive("cadquery-svg", CqSvgDirective)
     app.add_directive("cadquery-vtk", CqVtkDirective)
