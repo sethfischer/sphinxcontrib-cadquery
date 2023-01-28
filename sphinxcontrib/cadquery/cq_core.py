@@ -52,7 +52,7 @@ class CqSvgDirective(Directive, Cqgi):
     has_content = True
     required_arguments = 0
     optional_arguments = 0
-    option_spec = {}
+    option_spec = {}  # type: ignore[var-annotated]
 
     def run(self):
         """Generate SVG render of CadQuery model."""

@@ -2,6 +2,7 @@
 
 import shutil
 from pathlib import Path
+from typing import TypedDict
 
 from sphinx.application import Sphinx
 
@@ -22,7 +23,13 @@ _JS_FILES = {
 }
 
 
-def setup(app: Sphinx):
+class ExtensionMetadata(TypedDict):
+    """The metadata returned by this extension."""
+
+    version: str
+
+
+def setup(app: Sphinx) -> ExtensionMetadata:
     """Sphinx setup."""
     assets_installed = getattr(app, "_sphinxcontrib_cadquery_assets_installed", False)
 
