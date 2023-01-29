@@ -13,7 +13,7 @@ from .cq_core import (
     LegacyCqVtkDirective,
 )
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 _ROOT_DIR = Path(__file__).absolute().parent
 
