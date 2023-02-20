@@ -1,8 +1,16 @@
 .. raw:: html
 
     <div class="cadquery-container" style="margin-bottom: 24px">
-        <div class="cadquery-svg">
-            {{svg_document|indent(8)}}
+        <div class="cadquery-container-model">
+            <div class="cadquery-svg">
+                {{svg_document|indent(8)}}
+            </div>
+            <div class="cadquery-help-dropdown">
+                <button class="cadquery-credit">Modeled with CadQuery</button>
+                <div class="cadquery-help-dropdown-content">
+                    <p class="footer">Exported as SVG.</p>
+                </div>
+            </div>
         </div>
 
 {% if include_source %}
