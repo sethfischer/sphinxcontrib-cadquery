@@ -11,6 +11,10 @@ build:
       - poetry config virtualenvs.create false
     post_install:
       - poetry install
+      # DEBUG: test module installed with Poetry can be imported
+      - python -c "import cadquery; print(cadquery.__version__)"
+      # DEBUG: test current project `sphinxcontrib.cadquery` can be imported
+      - python -c "import sphinxcontrib.cadquery; print(sphinxcontrib.cadquery.__version__)"
       - npm clean-install
       - make npm-build
 
