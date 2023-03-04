@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction
 
+      - name: Lint Read the Docs requirements
+        run: make lint-rtd-requirements
+
       - name: Lint Python files
         run: poetry run make lint-python
