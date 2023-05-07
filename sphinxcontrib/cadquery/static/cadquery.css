@@ -15,6 +15,7 @@
 }
 
 .cadquery-container-model {
+    border: 1px solid #ddd;
     color: white;
     position: relative;
 }
