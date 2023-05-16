@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sphinxcontrib-cadquery"
-version = "0.5.0"
+version = "0.6.0"
 description = "Sphinx extension for rendering CadQuery models."
 packages = [
     {include = "sphinxcontrib"},
@@ -85,7 +85,7 @@ spyder = "^5.4.1"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.5.0"
+version = "0.6.0"
 major_version_zero = true
 tag_format = "$version"
 annotated_tag = true
