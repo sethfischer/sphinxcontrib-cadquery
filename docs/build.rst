@@ -18,10 +18,9 @@ Build
 
     git clone https://github.com/sethfischer/sphinxcontrib-cadquery.git
     cd sphinxcontrib-cadquery
-    python3.9 -m venv .venv
-    . .venv/bin/activate
-    pip install -U pip
+    poetry env use python3.9
     poetry install
+    poetry shell
     npm clean-install
     make npm-build poetry-build
 
