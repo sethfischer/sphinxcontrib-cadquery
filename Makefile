@@ -24,3 +24,7 @@ lint-mypy:
 .PHONY: rtd-requirements
 rtd-requirements:
 	poetry export --without-hashes --with dev -f requirements.txt > docs/requirements.txt
+
+.PHONY: test
+test:
+	pytest
