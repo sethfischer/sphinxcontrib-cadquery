@@ -93,6 +93,12 @@ Directives
 
         Alignment of render.
 
+    .. rst:directive:option:: color
+        :type: list of RGBA values (optional)
+
+        Default color of render in RGBA notation.
+        Defined as a space- or comma-separated list of channel values between ``0`` and ``1``.
+
     .. rst:directive:option:: height
         :type: length or unitless (optional, default = 500px)
 

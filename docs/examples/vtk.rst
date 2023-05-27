@@ -59,6 +59,18 @@ Sketch
     )
 
 
+Color
+-----
+
+Default color
+~~~~~~~~~~~~~
+
+.. cadquery-vtk::
+    :color: 0.5, 1, 0.8, 1
+
+    result = cadquery.Workplane("front").box(2, 2, 0.5)
+
+
 Size and alignment
 ------------------
 

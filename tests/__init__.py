@@ -1,0 +1,1 @@
+"""Sphinx CadQuery extension tests."""

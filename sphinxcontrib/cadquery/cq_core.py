@@ -22,6 +22,8 @@ from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.util import logging
 
+from .option_converters import rgba
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_COLOR = [1, 0.8, 0, 1]
@@ -101,6 +103,7 @@ class CqVtkDirective(Directive, Cqgi):
     optional_arguments = 1
     option_spec = {
         "align": directives.unchanged,
+        "color": rgba,
         "height": directives.length_or_unitless,
         "select": directives.unchanged,
         "width": directives.length_or_percentage_or_unitless,
@@ -122,8 +125,9 @@ class CqVtkDirective(Directive, Cqgi):
             state_machine.reporter.error(message)
             return [p]
 
+        color = options.get("color", DEFAULT_COLOR)
         shape = self._select_shape(result, options.get("select", "result"))
-        assembly = self._to_assembly(shape)
+        assembly = self._to_assembly(shape, color=color)
         vtk_json = dumps(cq_assembly_toJSON(assembly), separators=(",", ":"))
 
         rst_markup = _JINJA_ENV.get_template("vtk.rst.jinja").render(
@@ -171,14 +175,14 @@ class CqVtkDirective(Directive, Cqgi):
         return result.env[select]
 
     @staticmethod
-    def _to_assembly(shape):
+    def _to_assembly(shape, color: list[float]):
         """Convert shape to assembly."""
         if isinstance(shape, Assembly):
             return shape
         elif isinstance(shape, Sketch):
-            return Assembly(shape._faces, color=Color(*DEFAULT_COLOR))
+            return Assembly(shape._faces, color=Color(*color))
 
-        return Assembly(shape, color=Color(*DEFAULT_COLOR))
+        return Assembly(shape, color=Color(*color))
 
 
 class LegacyCqSvgDirective(CqSvgDirective):
