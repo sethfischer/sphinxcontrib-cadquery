@@ -20,9 +20,11 @@ extensions = [
 templates_path = ["_templates"]
 exclude_patterns = ["_build"]
 
+html_context = {
+    "display_github": False,
+}
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
-
 
 intersphinx_mapping = {
     "cadquery-latest": ("https://cadquery.readthedocs.io/en/latest/", None),
