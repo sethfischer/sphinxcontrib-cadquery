@@ -15,13 +15,14 @@ SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 from json import dumps
 from pathlib import Path
 
-from cadquery import Assembly, Color, Sketch, cqgi, exporters
+from cadquery import Assembly, Color, Sketch, exporters
 from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
 from docutils import nodes
 from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.util import logging
 
+from .cqgi import Cqgi
 from .option_converters import rgba
 
 logger = logging.getLogger(__name__)
@@ -32,20 +33,6 @@ _JINJA_ENV = Environment(
     loader=PackageLoader("sphinxcontrib.cadquery"),
     autoescape=select_autoescape(),
 )
-
-
-class Cqgi:
-    """Execute script source using CQGI."""
-
-    @staticmethod
-    def _cqgi_parse(script_source: str):
-        """Execute script source using CQGI."""
-        result = cqgi.parse(script_source).build()
-
-        if not result.success:
-            raise result.exception
-
-        return result
 
 
 class CqSvgDirective(Directive, Cqgi):
