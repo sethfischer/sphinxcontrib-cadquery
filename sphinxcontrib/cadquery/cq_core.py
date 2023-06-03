@@ -12,22 +12,19 @@ SPDX-FileContributor: Miguel Sánchez de León Peque <peque@neosit.es>
 SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 """
 
-from json import dumps
 from pathlib import Path
 
-from cadquery import Assembly, Color, Sketch, exporters
-from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
+from cadquery import exporters
 from docutils import nodes
 from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.util import logging
 
-from .cqgi import Cqgi
+from .common import DEFAULT_COLOR
+from .cqgi import Cqgi, VtkJsonExporter
 from .option_converters import rgba
 
 logger = logging.getLogger(__name__)
-
-DEFAULT_COLOR = [1, 0.8, 0, 1]
 
 _JINJA_ENV = Environment(
     loader=PackageLoader("sphinxcontrib.cadquery"),
@@ -113,14 +110,12 @@ class CqVtkDirective(Directive, Cqgi):
             return [p]
 
         color = options.get("color", DEFAULT_COLOR)
-        shape = self._select_shape(result, options.get("select", "result"))
-        assembly = self._to_assembly(shape, color=color)
-        vtk_json = dumps(cq_assembly_toJSON(assembly), separators=(",", ":"))
+        vtk_json = VtkJsonExporter(result, options.get("select", "result"))
 
         rst_markup = _JINJA_ENV.get_template("vtk.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
-            vtk_json=vtk_json,
+            vtk_json=vtk_json(color=color),
             element="document.currentScript.parentNode",
             align=options.get("align", "none"),
             width=options.get("width", "100%"),
@@ -152,24 +147,6 @@ class CqVtkDirective(Directive, Cqgi):
             )
 
         return "\n".join(self.content)
-
-    @staticmethod
-    def _select_shape(result, select: str):
-        """Select shape from CQGI environment."""
-        if result.first_result:
-            return result.first_result.shape
-
-        return result.env[select]
-
-    @staticmethod
-    def _to_assembly(shape, color: list[float]):
-        """Convert shape to assembly."""
-        if isinstance(shape, Assembly):
-            return shape
-        elif isinstance(shape, Sketch):
-            return Assembly(shape._faces, color=Color(*color))
-
-        return Assembly(shape, color=Color(*color))
 
 
 class LegacyCqSvgDirective(CqSvgDirective):
