@@ -1,6 +1,6 @@
-======
-VTK.js
-======
+============
+cadquery-vtk
+============
 
 :rst:dir:`VTK.js <cadquery-vtk>` renderer examples.
 

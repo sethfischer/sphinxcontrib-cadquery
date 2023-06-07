@@ -16,7 +16,7 @@ A fork of the Sphinx extension in :ref:`CadQuery/cadquery <cadquery-core>`.
 Directives
 ----------
 
-Refer to the :ref:`usage-directives` section for more details.
+Refer to the :doc:`directives` section for more details.
 
 :rst:dir:`cadquery-vtk`
     alias: :rst:dir:`cadquery`
@@ -33,7 +33,9 @@ Refer to the :ref:`usage-directives` section for more details.
     :maxdepth: 2
     :caption: Contents
 
-    usage
+    installation
+    configuration
+    directives
     examples/index
     related
     build
