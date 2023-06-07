@@ -1,6 +1,6 @@
-===
-SVG
-===
+============
+cadquery-svg
+============
 
 :rst:dir:`SVG <cadquery-svg>` renderer examples.
 
