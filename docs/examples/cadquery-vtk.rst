@@ -4,7 +4,7 @@ cadquery-vtk
 
 :rst:dir:`VTK.js <cadquery-vtk>` renderer examples.
 
-.. include:: ../includes/note-view-source.rst
+.. include:: ../includes/tip-view-source.rst
 
 
 Simple rectangular plate
