@@ -54,8 +54,8 @@ Sketch
     )
 
 
-Load from file
---------------
+Source from file
+----------------
 
 .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
 
