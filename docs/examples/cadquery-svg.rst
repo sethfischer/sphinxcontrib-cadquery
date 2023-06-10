@@ -12,7 +12,7 @@ Simple rectangular plate
 
 .. cadquery-svg::
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)
     show_object(result)
 
 
@@ -24,7 +24,7 @@ Pillow block
     (length, height, diam, thickness, padding) = (30.0, 40.0, 22.0, 10.0, 8.0)
 
     result = (
-        cq.Workplane("XY")
+        cq.Workplane()
         .box(length, height, thickness)
         .faces(">Z")
         .workplane()
