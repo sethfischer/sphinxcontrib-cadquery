@@ -91,11 +91,17 @@ Directives
 
 .. rst:directive:: .. cadquery::
 
+    Alias for :rst:dir:`cadquery-vtk`.
+    Provides compatibility with the CadQuery core directive.
+
     .. deprecated:: 0.2.0
        Use the :rst:dir:`cadquery-vtk` directive instead.
 
 
 .. rst:directive:: .. cq_plot::
+
+    Alias for :rst:dir:`cadquery-svg`.
+    Provides compatibility with the CadQuery core directive.
 
     .. deprecated:: 0.2.0
        Use the :rst:dir:`cadquery-svg` directive instead.
