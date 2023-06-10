@@ -6,13 +6,6 @@ A `Sphinx`_ extension for rendering `CadQuery`_ models.
 A fork of the Sphinx extension in :ref:`CadQuery/cadquery <cadquery-core>`.
 
 
-.. admonition:: Development Status
-
-    :Development Status: 2 - Pre-Alpha
-
-    See also a :doc:`list of similar projects<related>`.
-
-
 Directives
 ----------
 
