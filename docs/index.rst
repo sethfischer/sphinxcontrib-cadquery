@@ -12,12 +12,12 @@ Directives
 Refer to the :doc:`directives` section for more details.
 
 :rst:dir:`cadquery-vtk`
-    alias: :rst:dir:`cadquery`
+    Alias: **cadquery**
 
     Render a CadQuery model using `kitware/vtk.js`_.
 
 :rst:dir:`cadquery-svg`
-    alias: :rst:dir:`cq_plot`
+    Alias: **cq_plot**
 
     Render a CadQuery model using :abbr:`SVG (Scalable Vector Graphics)`.
 
