@@ -66,7 +66,7 @@ class CqSvgDirective(Directive, Cqgi):
 
         svg_document = exporters.getSVG(compound)
 
-        rst_markup = _JINJA_ENV.get_template("svg.rst.jinja").render(
+        rst_markup = _JINJA_ENV.get_template("cadquery-svg.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
             svg_document=svg_document,
@@ -112,7 +112,7 @@ class CqVtkDirective(Directive, Cqgi):
         color = options.get("color", DEFAULT_COLOR)
         vtk_json = VtkJsonExporter(result, options.get("select", "result"))
 
-        rst_markup = _JINJA_ENV.get_template("vtk.rst.jinja").render(
+        rst_markup = _JINJA_ENV.get_template("cadquery-vtk.rst.jinja").render(
             include_source=env.config.cadquery_include_source,
             script_source=script_source,
             vtk_json=vtk_json(color=color),

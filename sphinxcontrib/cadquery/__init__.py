@@ -12,6 +12,7 @@ from .cq_core import (
     LegacyCqSvgDirective,
     LegacyCqVtkDirective,
 )
+from .domain import CadQueryDomain
 
 __version__ = "0.7.0"
 
@@ -54,6 +55,8 @@ def setup(app: Sphinx) -> ExtensionMetadata:
         shutil.copyfile(_ROOT_DIR / "static/cadquery.css", css_destination)
 
         setattr(app, "_sphinxcontrib_cadquery_assets_installed", True)
+
+    app.add_domain(CadQueryDomain)
 
     app.add_directive("cadquery-svg", CqSvgDirective)
     app.add_directive("cadquery-vtk", CqVtkDirective)

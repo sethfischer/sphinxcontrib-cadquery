@@ -1,0 +1,24 @@
+<div class="cadquery-vtk" style="height:{{height}};" role="img" aria-label="An interactive 3D model.">
+    <script>
+        var parent_element = {{element}};
+        var data = {{vtk_json}};
+        render(data, parent_element);
+    </script>
+</div>
+<div class="cadquery-help-dropdown">
+    <button class="cadquery-credit">Modeled with CadQuery</button>
+    <div class="cadquery-help-dropdown-content">
+        <dl>
+            <dt>roll</dt>
+            <dd>MB1</dd>
+            <dt>pan</dt>
+            <dd>MB2</dd>
+            <dt>zoom</dt>
+            <dd>MB3</dd>
+            <dt>rotate</dt>
+            <dd>shift+MB1</dd>
+        </dl>
+        <p class="footer">Rendered with VTK.js</p>
+    </div>
+</div>
+

@@ -2,7 +2,7 @@
 cadquery-vtk
 ============
 
-:rst:dir:`VTK.js <cadquery-vtk>` renderer examples.
+Examples of the :rst:dir:`cadquery-vtk` directive.
 
 .. include:: ../includes/tip-view-source.rst
 
@@ -66,7 +66,7 @@ Options
 Default color
 ~~~~~~~~~~~~~
 
-Set the default color using the ``color`` option.
+The ``color`` option defines the default color of the VTK.js render.
 
 .. cadquery-vtk::
     :color: 0.5, 1, 0.8, 1

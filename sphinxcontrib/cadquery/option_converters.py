@@ -1,5 +1,17 @@
 """Sphinx option conversion functions."""
 
+from docutils.parsers.rst import directives
+
+
+def align(argument):
+    """Sphinx directive align option."""
+    return directives.choice(argument, ("left", "center", "right"))
+
+
+def yes_no(argument):
+    """Sphinx directive yes/no option."""
+    return directives.choice(argument, ("yes", "no"))
+
 
 def color_channel_value(argument):
     """Converts the argument into a float.
