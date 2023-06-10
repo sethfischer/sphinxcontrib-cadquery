@@ -77,3 +77,22 @@ div.cadquery-help-dropdown {
 .cadquery-help-dropdown-content dl dd {
     grid-column: 2;
 }
+
+.cadquery-container {
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+.cadquery-container * pre {
+    text-align: left;
+}
+
+figcaption *:last-child,
+figure *:last-child,
+.cadquery-container *:last-child {
+    margin-bottom: 0 !important;
+}
+
+.cadquery-notes * {
+    font-size: small;
+}

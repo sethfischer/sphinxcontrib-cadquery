@@ -2,7 +2,7 @@
 cadquery-svg
 ============
 
-:rst:dir:`SVG <cadquery-svg>` renderer examples.
+Examples of the :rst:dir:`cadquery-svg` directive.
 
 .. include:: ../includes/tip-view-source.rst
 
