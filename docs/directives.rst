@@ -4,6 +4,8 @@ Directives
 
 .. rst:directive:: .. cadquery-vtk:: [path_name]
 
+    Alias: **.. cadquery::**. Provides compatibility with the CadQuery core directive.
+
     Render a CadQuery model using `kitware/vtk.js`_.
 
     VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
@@ -66,6 +68,8 @@ Directives
 
 .. rst:directive:: .. cadquery-svg::
 
+    Alias: **.. cq_plot:**. Provides compatibility with the CadQuery core directive.
+
     Render a CadQuery model using SVG.
 
     .. tip::
@@ -87,24 +91,6 @@ Directives
 
     .. versionadded:: 0.2.0
       Identical to depreciated :rst:dir:`cq_plot` directive.
-
-
-.. rst:directive:: .. cadquery::
-
-    Alias for :rst:dir:`cadquery-vtk`.
-    Provides compatibility with the CadQuery core directive.
-
-    .. deprecated:: 0.2.0
-       Use the :rst:dir:`cadquery-vtk` directive instead.
-
-
-.. rst:directive:: .. cq_plot::
-
-    Alias for :rst:dir:`cadquery-svg`.
-    Provides compatibility with the CadQuery core directive.
-
-    .. deprecated:: 0.2.0
-       Use the :rst:dir:`cadquery-svg` directive instead.
 
 
 .. _`kitware/vtk.js`: https://kitware.github.io/vtk-js/
