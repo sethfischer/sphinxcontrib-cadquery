@@ -33,13 +33,6 @@ Assembly
 
     show_object(assembly)
 
-
-Load from file
---------------
-
-.. cadquery-vtk:: ../examples/simple-rectangular-plate.py
-
-
 Sketch
 ------
 
@@ -61,11 +54,19 @@ Sketch
     )
 
 
-Color
------
+Load from file
+--------------
+
+.. cadquery-vtk:: ../examples/simple-rectangular-plate.py
+
+
+Options
+-------
 
 Default color
 ~~~~~~~~~~~~~
+
+Set the default color using the ``color`` option.
 
 .. cadquery-vtk::
     :color: 0.5, 1, 0.8, 1
@@ -74,10 +75,13 @@ Default color
 
 
 Size and alignment
-------------------
+~~~~~~~~~~~~~~~~~~
 
-Align center
-~~~~~~~~~~~~
+Set the size using the ``width`` and ``height`` options.
+
+Set horizontal alignment using the ``align`` option.
+
+.. rubric:: Center
 
 .. cadquery-vtk::
     :height: 100px
@@ -87,8 +91,8 @@ Align center
     result = cadquery.Workplane("front").box(2, 2, 0.5)
 
 
-Align left
-~~~~~~~~~~
+.. rubric:: Align left
+
 
 .. cadquery-vtk::
     :height: 100px
@@ -98,8 +102,7 @@ Align left
     result = cadquery.Workplane("front").box(2, 2, 0.5)
 
 
-Align right
-~~~~~~~~~~~
+.. rubric:: Align right
 
 .. cadquery-vtk::
     :height: 100px
