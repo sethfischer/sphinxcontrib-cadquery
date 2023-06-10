@@ -12,7 +12,7 @@ Simple rectangular plate
 
 .. cadquery-vtk::
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)
 
 
 Assembly
@@ -71,7 +71,7 @@ Set the default color using the ``color`` option.
 .. cadquery-vtk::
     :color: 0.5, 1, 0.8, 1
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)
 
 
 Size and alignment
@@ -88,7 +88,7 @@ Set horizontal alignment using the ``align`` option.
     :width: 200px
     :align: center
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)
 
 
 .. rubric:: Align left
@@ -99,7 +99,7 @@ Set horizontal alignment using the ``align`` option.
     :width: 200px
     :align: left
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)
 
 
 .. rubric:: Align right
@@ -109,4 +109,4 @@ Set horizontal alignment using the ``align`` option.
     :width: 200px
     :align: right
 
-    result = cadquery.Workplane("front").box(2, 2, 0.5)
+    result = cadquery.Workplane().box(2, 2, 0.5)

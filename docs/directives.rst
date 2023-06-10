@@ -18,14 +18,14 @@ Directives
 
         .. cadquery-vtk::
 
-            result = cadquery.Workplane("front").box(2, 2, 0.5)
+            result = cadquery.Workplane().box(2, 2, 0.5)
 
     .. code-block:: rst
 
         .. cadquery-vtk::
             :height: 100px
 
-            result = cadquery.Workplane("front").box(2, 2, 0.5)
+            result = cadquery.Workplane().box(2, 2, 0.5)
 
     .. code-block:: rst
 
@@ -79,7 +79,7 @@ Directives
 
         .. cadquery-svg::
 
-            result = cadquery.Workplane("front").box(2, 2, 0.5)
+            result = cadquery.Workplane().box(2, 2, 0.5)
             show_object(result)
 
     The SVG image is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`

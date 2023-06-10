@@ -2,4 +2,4 @@
 
 import cadquery
 
-result = cadquery.Workplane("front").box(2, 2, 0.5)
+result = cadquery.Workplane().box(2, 2, 0.5)
