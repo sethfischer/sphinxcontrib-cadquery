@@ -9,13 +9,10 @@ Directives
 
     Render a CadQuery model using `kitware/vtk.js`_.
 
-    VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
-    and :func:`cadquery-latest:cadquery.occ_impl.assembly.toJSON`.
-
     The *path_name* argument is a path to a CadQuery source file,
     relative to the Sphinx content root.
 
-    Examples:
+    .. rubric:: Examples
 
     .. code-block:: rst
         :caption: Default is to render the "result" object.
@@ -37,6 +34,8 @@ Directives
 
         .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
 
+    VTK JavaScript is generated using the :doc:`CadQuery Gateway Interface <cadquery-latest:cqgi>`
+    and :func:`cadquery-latest:cadquery.occ_impl.assembly.toJSON`.
 
     .. versionadded:: 0.2.0
         Identical to depreciated :rst:dir:`cadquery` directive.
@@ -82,7 +81,7 @@ Directives
         The CadQuery source must call
         :meth:`show_object() <cadquery-latest:cadquery.cqgi.ScriptCallback.show_object>`.
 
-    Examples:
+    .. rubric:: Examples
 
     .. code-block:: rst
         :caption: Render the object passed to "show_object()" as a SVG image.
