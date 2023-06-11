@@ -4,10 +4,8 @@ Directives
 
 .. rst:directive:: .. cadquery-vtk:: [path_name]
 
-    .. rubric:: Aliases
-
-    **.. cadquery::**
-        Provides compatibility with the CadQuery core directive.
+    Aliases
+        :cadquery: Provides compatibility with the CadQuery core directive.
 
     Render a CadQuery model using `kitware/vtk.js`_.
 
@@ -74,10 +72,8 @@ Directives
 
 .. rst:directive:: .. cadquery-svg::
 
-    .. rubric:: Aliases
-
-    **.. cq_plot:**
-        Provides compatibility with the CadQuery core directive.
+    Aliases
+        :cq_plot: Provides compatibility with the CadQuery core directive.
 
     Render a CadQuery model using SVG.
 
