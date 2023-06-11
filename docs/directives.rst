@@ -20,12 +20,14 @@ Directives
     Examples:
 
     .. code-block:: rst
+        :caption: Default is to render the "result" object.
 
         .. cadquery-vtk::
 
             result = cadquery.Workplane().box(2, 2, 0.5)
 
     .. code-block:: rst
+        :caption: Set the height of the VTK.js render window.
 
         .. cadquery-vtk::
             :height: 100px
@@ -33,6 +35,7 @@ Directives
             result = cadquery.Workplane().box(2, 2, 0.5)
 
     .. code-block:: rst
+        :caption: Load CadQuery source code from a file.
 
         .. cadquery-vtk:: ../examples/simple-rectangular-plate.py
 
@@ -86,6 +89,7 @@ Directives
     Examples:
 
     .. code-block:: rst
+        :caption: Render the object passed to "show_object()" as a SVG image.
 
         .. cadquery-svg::
 
