@@ -18,7 +18,7 @@ __version__ = "0.7.0"
 _ROOT_DIR = Path(__file__).absolute().parent
 
 _JS_FILES = {
-    "static/dist/vtk-lite.js": {"priority": 90},
+    "static/dist/vtk-custom.js": {"priority": 90},
     "static/render.js": {"priority": 100},
 }
 

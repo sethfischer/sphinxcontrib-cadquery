@@ -3,7 +3,11 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "production",
-  entry: {},
+  entry: "./sphinxcontrib/cadquery/static/index.js",
+  output: {
+    path: path.resolve(__dirname, "sphinxcontrib/cadquery/static/dist"),
+    filename: "vtk-custom.js",
+  },
   plugins: [
     new CopyPlugin({
       patterns: [
