@@ -25,6 +25,10 @@ Refer to the :doc:`directives` section for more details.
     Render a CadQuery model using `kitware/vtk.js`_.
     Differs from :rst:dir:`cadquery-vtk` in that it provides additional options and content variations.
 
+:rst:dir:`cadquery:svg`
+    Render a CadQuery model using the :doc:`CadQuery SVG exporter <cadquery-latest:importexport>`.
+    Differs from :rst:dir:`cadquery-svg` in that it provides additional options and content variations.
+
 
 .. toctree::
     :maxdepth: 2

@@ -1,23 +1,23 @@
 ============
-cadquery:vtk
+cadquery:svg
 ============
 
-Examples of the :rst:dir:`cadquery:vtk` directive.
+Examples of the :rst:dir:`cadquery:svg` directive.
 
 .. include:: ../includes/status-pre-alpha.rst
 
-:rst:dir:`cadquery:vtk` is based on the docutils "figure" directive having similar features and syntax:
+:rst:dir:`cadquery:svg` is based on the docutils "figure" directive having similar features and syntax:
 
-* The model may be captioned.
+* The image may be captioned.
 * Notes may be added below the code block.
-* Models may be referenced by name: :ref:`color example <example-vtk-color-option>`.
+* Images may be referenced by name: :ref:`include from file example <example-svg-include-from-file>`.
 
-The model source code is defined in either a :rst:dir:`sphinx-master:code-block` or
+The image source code is defined in either a :rst:dir:`sphinx-master:code-block` or
 :rst:dir:`sphinx-master:literalinclude`, meaning:
 
 * All options for :rst:dir:`sphinx-master:code-block` or :rst:dir:`sphinx-master:literalinclude`
   may be used such as :rst:dir:`sphinx-master:code-block:linenos` and :rst:dir:`sphinx-master:code-block:emphasize-lines`.
-* Model source code blocks may be referenced by name: :ref:`CadQuery source code for a rectangular plate <example-vtk-rectangular-plate-code>`.
+* Image source code blocks may be referenced by name: :ref:`CadQuery source code for a rectangular plate <example-svg-rectangular-plate-code>`.
 
 .. include:: ../includes/tip-view-source.rst
 
@@ -25,12 +25,13 @@ The model source code is defined in either a :rst:dir:`sphinx-master:code-block`
 Simple rectangular plate
 ------------------------
 
-.. cadquery:vtk::
+.. cadquery:svg::
+    :alt: A rectangular plate
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
     .. code-block:: python
-        :name: example-vtk-rectangular-plate-code
+        :name: example-svg-rectangular-plate-code
         :linenos:
         :emphasize-lines: 5
 
@@ -46,58 +47,37 @@ Simple rectangular plate
     #. Line number 5 is emphasized with ``emphasize-lines``.
 
 
-Assembly
---------
+Pillow block
+------------
 
-.. cadquery:vtk::
+.. cadquery:svg::
 
-    An assembly of two cones.
-
-    .. code-block:: python
-
-        cone = cq.Solid.makeCone(1, 0, 2)
-
-        assembly = cq.Assembly()
-        assembly.add(
-            cone,
-            loc=cq.Location((0, 0, 0), (1, 0, 0), 180),
-            name="cone0",
-            color=cq.Color("green"),
-        )
-        assembly.add(cone, name="cone1", color=cq.Color("blue"))
-
-        show_object(assembly)
-
-
-Sketch
-------
-
-.. cadquery:vtk::
-
-    A sketch.
+    A pillow block.
 
     .. code-block:: python
 
-        import cadquery as cq
+        (length, height, diam, thickness, padding) = (30.0, 40.0, 22.0, 10.0, 8.0)
 
-        result = (
-            cq.Sketch()
-            .trapezoid(4, 3, 90)
+        pillow_block = (
+            cq.Workplane()
+            .box(length, height, thickness)
+            .faces(">Z")
+            .workplane()
+            .hole(diam)
+            .faces(">Z")
+            .workplane()
+            .rect(length - padding, height - padding, forConstruction=True)
             .vertices()
-            .circle(0.5, mode="s")
-            .reset()
-            .vertices()
-            .fillet(0.25)
-            .reset()
-            .rarray(0.6, 1, 5, 1)
-            .slot(1.5, 0.4, mode="s", angle=90)
+            .cboreHole(2.4, 4.4, 2.1)
         )
+
+        show_object(pillow_block)
 
 
 Source from file
 ----------------
 
-.. cadquery:vtk::
+.. cadquery:svg::
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
@@ -110,7 +90,7 @@ Content variations
 Code block: without caption or source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
     :include-source: no
 
     ..
@@ -127,7 +107,8 @@ Code block: without caption or source
 Code block: with both caption and source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
+    :select: plate
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
@@ -137,13 +118,13 @@ Code block: with both caption and source
 
         import cadquery as cq
 
-        result = cadquery.Workplane().box(2, 2, 0.5)
+        plate = cadquery.Workplane().box(2, 2, 0.5)
 
 
 Code block: with caption, source, and notes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
@@ -166,7 +147,7 @@ Code block: with caption, source, and notes
 Source from file: without caption or source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
     :include-source: no
 
     ..
@@ -177,7 +158,7 @@ Source from file: without caption or source
 Source from file: with both caption and source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
@@ -187,7 +168,8 @@ Source from file: with both caption and source
 Source from file: with caption, source, and notes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cadquery:vtk::
+.. cadquery:svg::
+    :name: example-svg-include-from-file
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
@@ -197,22 +179,3 @@ Source from file: with caption, source, and notes
 
     :Material: stainless steel
     :Finish: brushed
-
-
-Options
--------
-
-Default color
-~~~~~~~~~~~~~
-
-The :ref:`color option <vtk-option-color>` defines the default color of VTK.js render.
-
-.. cadquery:vtk::
-    :name: example-vtk-color-option
-    :color: 0.5, 1, 0.8, 1
-
-    Default color set to ``0.5, 1, 0.8, 1``.
-
-    .. code-block:: python
-
-        result = cadquery.Workplane().box(2, 2, 0.5)
