@@ -9,3 +9,4 @@ Examples
     cadquery-vtk
     cadquery-svg
     vtk
+    svg

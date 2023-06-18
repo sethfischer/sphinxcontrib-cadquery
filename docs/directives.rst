@@ -230,5 +230,123 @@ Directives
         Whether to include CadQuery source code listing.
         Defaults to :confval:`cadquery_include_source`.
 
+.. rst:directive:: .. cadquery:svg::
+
+    Render a CadQuery model using SVG.
+
+    .. include:: includes/status-pre-alpha.rst
+
+    A **cadquery:svg** directive consists of:
+
+    #. A paragraph to be used as the caption (or empty comment to omit a caption), and;
+    #. a :rst:dir:`sphinx-master:code-block` or :rst:dir:`sphinx-master:literalinclude`
+       from which the source is extracted to render the model, and;
+    #. optional additional content that follows will be used as notes.
+
+    There must be a blank line before each of the caption, paragraph, and code block.
+    If notes are included then they must separated from the code block by a blank line.
+    To specify an empty caption, use an empty comment ("..") in place of the caption.
+
+    Refer to the :doc:`cadquery:svg examples section <examples/svg>` for demonstrations of the various options.
+
+    The SVG image is generated using the CadQuery SVG exporter.
+
+    .. versionadded:: 0.8.0
+
+    .. rubric:: Examples
+
+    .. code-block:: rst
+        :caption: Code block: with caption, source, and notes
+
+        .. cadquery:svg::
+            :alt: A rectangular plate
+
+            A simple rectangular plate measuring 2 × 2 × 0.5 mm.
+
+            .. code-block:: python
+                :name: cq-rectangular-plate
+                :linenos:
+                :emphasize-lines: 5
+
+                """Simple rectangular plate."""
+
+                import cadquery as cq
+
+                result = cadquery.Workplane().box(2, 2, 0.5)
+
+            .. rubric:: Notes:
+
+            #. Line numbers are added with ``linenos``.
+            #. Line number 5 is emphasized with ``emphasize-lines``.
+
+    .. code-block:: rst
+        :caption: Code block: without caption or source
+
+        .. cadquery:svg::
+            :include-source: no
+
+            ..
+
+            .. code-block:: python
+
+                """Simple rectangular plate."""
+
+                import cadquery as cq
+
+                result = cadquery.Workplane().box(2, 2, 0.5)
+
+    .. code-block:: rst
+        :caption: Source from file: with caption, source, and notes
+
+        .. cadquery:svg::
+
+            A simple rectangular plate measuring 2 × 2 × 0.5 mm.
+
+            .. literalinclude:: ../../examples/simple-rectangular-plate.py
+
+            Notes may follow the ``literalinclude``.
+
+            :Material: stainless steel
+            :Finish: brushed
+
+
+    .. rubric:: Options
+
+    .. rst:directive:option:: name
+        :type: a label for hyperlink (optional)
+
+        Define an implicit target name that can be referenced using ``:ref:`label-name```.
+
+    .. rst:directive:option:: align
+        :type: left|center|right (optional, default = none)
+
+        Horizontal alignment of figure element.
+
+    .. rst:directive:option:: alt
+        :type: text (optional, default = "SVG image exported by CadQuery."))
+
+        Alternative text used for for the ``alt`` attribute on the ``<img>`` element.
+
+    .. rst:directive:option:: figclass
+        :type: space separated list of class names (optional)
+
+        Add classes to the figure element.
+
+    .. rst:directive:option:: figwidth
+        :type: length or percentage or unitless (optional, default = 100%)
+
+        Define the width of the figure element.
+        Value is used for the CSS ``width`` property.
+
+    .. rst:directive:option:: select
+        :type: name of shape to render (optional, default = result)
+
+        Select the CadQuery object to render.
+
+    .. rst:directive:option:: include-source
+        :type: yes|no (optional)
+
+        Whether to include CadQuery source code listing.
+        Defaults to :confval:`cadquery_include_source`.
 
 .. _`kitware/vtk.js`: https://kitware.github.io/vtk-js/
