@@ -338,6 +338,21 @@ Directives
         Define the width of the figure element.
         Value is used for the CSS ``width`` property.
 
+    .. rst:directive:option:: inline-uri
+        :type: flag
+
+        Include the SVG image in-line using the data URI scheme:
+
+        .. code-block:: html
+
+            <img src="data:image/svg+xml;base64,PD94bWwgdm…">
+
+        Default is to reference the image with a relative URL:
+
+        .. code-block:: html
+
+            <img src="../_static/cadquery-exports/995c440e.svg">
+
     .. rst:directive:option:: select
         :type: name of shape to render (optional, default = result)
 
