@@ -1,6 +1,8 @@
 """Cadquery domain."""
 
 from base64 import b64encode
+from hashlib import sha1
+from pathlib import Path
 from typing import Optional
 
 from docutils import nodes
@@ -19,6 +21,87 @@ _JINJA_ENV = Environment(
     loader=PackageLoader("sphinxcontrib.cadquery"),
     autoescape=select_autoescape(),
 )
+
+
+def error_node(message: str, detail: str):
+    """Error node."""
+
+    node = nodes.paragraph()
+    node["classes"].extend(["cadquery-error"])
+    node.append(nodes.strong(text=message))
+    node.append(nodes.inline(text=detail))
+
+    return node
+
+
+def set_svg_image_uri(app, doctree):
+    """Export SVG images.
+
+    To be called on the Sphinx doctree-read event.
+    """
+
+    for img in doctree.traverse(nodes.image):
+        if not hasattr(img, "cadquery"):
+            continue
+
+        context = img.cadquery["context"]
+
+        try:
+            svg_document = export_svg(img.cadquery["source"], img.cadquery["select"])
+        except Exception as err:
+            error_text = f"CQGI error in {context['name']} directive {err}: "
+            detail_text = f"{img.source} on line {context['source_node_line']}."
+
+            logger.error(error_text + detail_text)
+            img.replace_self(error_node(error_text, detail_text))
+
+            continue
+
+        if img.cadquery["inline-uri"]:
+            svg_bytes = b64encode(svg_document.encode("ascii"))
+            img["uri"] = f"data:image/svg+xml;base64,{svg_bytes.decode('ascii')}"
+        else:
+            output_pathname = (
+                Path(app.builder.outdir)
+                .joinpath("_static")
+                .joinpath("cadquery-exports")
+                .joinpath(export_file_name(img.cadquery["source"]))
+            )
+            output_pathname.parent.mkdir(parents=True, exist_ok=True)
+
+            output_pathname.write_text(svg_document)
+
+            doc_name_absolute = Path(app.srcdir) / Path(app.builder.env.docname)
+            doc_depth = len(doc_name_absolute.parent.relative_to(app.srcdir).parts)
+
+            relative_to_document_part = Path("../" * doc_depth)
+            uri = relative_to_document_part / output_pathname.relative_to(
+                Path(app.builder.outdir)
+            )
+
+            img["uri"] = uri.as_posix()
+
+
+def export_file_name(source: str) -> Path:
+    """Create file name for CadQuery export."""
+    source_hash = sha1(source.encode()).hexdigest()[:8]
+
+    return Path(source_hash).with_suffix(".svg")
+
+
+def export_svg(source: str, select: str):
+    """Export SVG document."""
+
+    try:
+        parser = Cqgi()
+        result = parser._cqgi_parse(source)
+    except Exception as err:
+        raise err
+
+    exporter = SvgExporter(result, select)
+    svg_document = exporter()
+
+    return svg_document
 
 
 class CqDirective(Directive, Cqgi):
@@ -60,6 +143,7 @@ class CqSvgDirective(CqDirective):
         "figclass": directives.class_option,
         "figwidth": directives.length_or_percentage_or_unitless,
         "include-source": yes_no,
+        "inline-uri": directives.flag,
         "name": directives.unchanged,
         "select": directives.unchanged,
     }
@@ -73,6 +157,11 @@ class CqSvgDirective(CqDirective):
         figclasses = self.options.pop("figclass", None)
         figwidth = self.options.pop("figwidth", "100%")
         include_source_value = self.options.pop("include-source", None)
+
+        if "inline-uri" in self.options:
+            inline_uri = True
+        else:
+            inline_uri = False
 
         env = self.state.document.settings.env
 
@@ -136,10 +225,20 @@ class CqSvgDirective(CqDirective):
             if len(node) >= 3:
                 notes_nodes = node[2:]
 
-        image_node = self._image_node(source, alt)
+        image_node = nodes.image(source, alt=alt, uri="data:image/svg+xml;")
+        image_node["classes"].extend(["cadquery-container-model"])
 
         if isinstance(image_node, nodes.system_message):
             return [image_node]
+
+        image_node.cadquery = {
+            "context": {
+                "source_node_line": source_node.line,
+            },
+            "inline-uri": inline_uri,
+            "select": self.options.get("select", "result"),
+            "source": source,
+        }
 
         figure_node += image_node
 
@@ -159,30 +258,6 @@ class CqSvgDirective(CqDirective):
             figure_node += notes_container
 
         return [figure_node]
-
-    def _image_node(self, source: str, alt: str):
-        """Create image node."""
-
-        try:
-            result = self._cqgi_parse(source)
-        except Exception as err:
-            error_text = f"CQGI error in {self.name} directive: "
-            detail_text = f"{err}."
-
-            logger.error(error_text + detail_text)
-
-            return [self._error_node(error_text, detail_text)]
-
-        exporter = SvgExporter(result, self.options.get("select", "result"))
-        svg_document = exporter()
-
-        svg_bytes = b64encode(svg_document.encode("ascii"))
-        uri = f"data:image/svg+xml;base64,{svg_bytes.decode('ascii')}"
-
-        image_node = nodes.image(self.block_text, uri=uri, alt=alt)
-        image_node["classes"].extend(["cadquery-container-model"])
-
-        return image_node
 
 
 class CqVtkDirective(CqDirective):

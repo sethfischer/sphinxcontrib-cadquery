@@ -16,7 +16,6 @@
 
 .cadquery-container-model {
     border: 1px solid #ddd;
-    color: white;
     position: relative;
 }
 
@@ -95,4 +94,8 @@ figure *:last-child,
 
 .cadquery-notes * {
     font-size: small;
+}
+
+.cadquery-error {
+    color: red;
 }

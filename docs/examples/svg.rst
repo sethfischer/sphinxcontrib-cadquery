@@ -27,6 +27,7 @@ Simple rectangular plate
 
 .. cadquery:svg::
     :alt: A rectangular plate
+    :inline-uri:
 
     A simple rectangular plate measuring 2 × 2 × 0.5 mm.
 
