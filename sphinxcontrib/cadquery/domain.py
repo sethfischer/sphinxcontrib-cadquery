@@ -127,6 +127,34 @@ class CqDirective(Directive, Cqgi):
 
         return include_source
 
+    @staticmethod
+    def populate_figure_node(
+        figure_node: nodes.Node,
+        caption_node: Optional[nodes.Node] = None,
+        source_node: Optional[nodes.Node] = None,
+        notes_nodes: Optional[nodes.Node] = None,
+        *,
+        include_source=True,
+    ) -> nodes.Node:
+        """Populate figure node."""
+
+        if caption_node:
+            caption = nodes.caption(caption_node.rawsource, "", *caption_node.children)
+            caption.source = caption_node.source
+            caption.line = caption_node.line
+            figure_node += caption
+
+        if source_node and include_source:
+            figure_node += source_node
+
+        if notes_nodes:
+            notes_container = nodes.container()
+            notes_container["classes"].extend(["cadquery-notes"])
+            notes_container += notes_nodes
+            figure_node += notes_container
+
+        return figure_node
+
 
 class CqSvgDirective(CqDirective):
     """CadQuery SVG directive.
@@ -242,20 +270,13 @@ class CqSvgDirective(CqDirective):
 
         figure_node += image_node
 
-        if caption_node:
-            caption = nodes.caption(caption_node.rawsource, "", *caption_node.children)
-            caption.source = caption_node.source
-            caption.line = caption_node.line
-            figure_node += caption
-
-        if source_node and include_source:
-            figure_node += source_node
-
-        if notes_nodes:
-            notes_container = nodes.container()
-            notes_container["classes"].extend(["cadquery-notes"])
-            notes_container += notes_nodes
-            figure_node += notes_container
+        figure_node = self.populate_figure_node(
+            figure_node,
+            caption_node,
+            source_node,
+            notes_nodes,
+            include_source=include_source,
+        )
 
         return [figure_node]
 
@@ -354,20 +375,13 @@ class CqVtkDirective(CqDirective):
 
         figure_node += self._vtk_container_node(source, height)
 
-        if caption_node:
-            caption = nodes.caption(caption_node.rawsource, "", *caption_node.children)
-            caption.source = caption_node.source
-            caption.line = caption_node.line
-            figure_node += caption
-
-        if source_node and include_source:
-            figure_node += source_node
-
-        if notes_nodes:
-            notes_container = nodes.container()
-            notes_container["classes"].extend(["cadquery-notes"])
-            notes_container += notes_nodes
-            figure_node += notes_container
+        figure_node = self.populate_figure_node(
+            figure_node,
+            caption_node,
+            source_node,
+            notes_nodes,
+            include_source=include_source,
+        )
 
         return [figure_node]
 
