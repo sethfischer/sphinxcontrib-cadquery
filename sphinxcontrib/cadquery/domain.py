@@ -3,11 +3,13 @@
 from base64 import b64encode
 from hashlib import sha1
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional, Union
 
 from docutils import nodes
+from docutils.nodes import Node
 from docutils.parsers.rst import Directive, directives
 from jinja2 import Environment, PackageLoader, select_autoescape
+from sphinx.application import Sphinx
 from sphinx.domains import Domain
 from sphinx.util import logging
 
@@ -23,7 +25,7 @@ _JINJA_ENV = Environment(
 )
 
 
-def error_node(message: str, detail: str):
+def error_node(message: str, detail: str) -> Node:
     """Error node."""
 
     node = nodes.paragraph()
@@ -34,7 +36,7 @@ def error_node(message: str, detail: str):
     return node
 
 
-def set_svg_image_uri(app, doctree):
+def set_svg_image_uri(app: Sphinx, doctree: Any) -> None:
     """Export SVG images.
 
     To be called on the Sphinx doctree-read event.
@@ -90,7 +92,7 @@ def export_file_name(source: str) -> Path:
     return Path(source_hash).with_suffix(".svg")
 
 
-def export_svg(source: str, select: str):
+def export_svg(source: str, select: str) -> str:
     """Export SVG document."""
 
     try:
@@ -112,7 +114,7 @@ class CqDirective(Directive, Cqgi):
     msg_source_node = "Second node must be either a code-block or literalinclude."
     msg_two_or_more = "Directive {name} must be composed of 2 or more nodes."
 
-    def unexpected_content_error(self, message: Optional[str] = None):
+    def unexpected_content_error(self, message: Optional[str] = None) -> Any:
         """Unexpected content error."""
 
         if message is None:
@@ -145,13 +147,13 @@ class CqDirective(Directive, Cqgi):
 
     @staticmethod
     def populate_figure_node(
-        figure_node: nodes.Node,
-        caption_node: Optional[nodes.Node] = None,
-        source_node: Optional[nodes.Node] = None,
-        notes_nodes: Optional[nodes.Node] = None,
+        figure_node: Node,
+        caption_node: Optional[Node] = None,
+        source_node: Optional[Node] = None,
+        notes_nodes: Optional[Union[Node, list[Node]]] = None,
         *,
-        include_source=True,
-    ) -> nodes.Node:
+        include_source: bool = True,
+    ) -> Node:
         """Populate figure node."""
 
         if caption_node:
@@ -193,7 +195,7 @@ class CqSvgDirective(CqDirective):
     }
     has_content = True
 
-    def run(self):
+    def run(self) -> list[Node]:
         """Run."""
 
         align = self.options.pop("align", None)
@@ -302,7 +304,7 @@ class CqVtkDirective(CqDirective):
     }
     has_content = True
 
-    def run(self):
+    def run(self) -> list[Node]:
         """Run."""
 
         align = self.options.pop("align", None)

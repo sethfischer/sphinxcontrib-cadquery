@@ -13,6 +13,7 @@ SPDX-FileContributor: Seth Fischer <seth@fischer.nz>
 """
 
 from pathlib import Path
+from typing import Any
 
 from cadquery import exporters
 from docutils import nodes
@@ -40,7 +41,7 @@ class CqSvgDirective(Directive, Cqgi):
     optional_arguments = 0
     option_spec = {}  # type: ignore[var-annotated]
 
-    def run(self):
+    def run(self) -> list[Any]:
         """Generate SVG render of CadQuery model."""
         content = self.content
         state_machine = self.state_machine
@@ -93,7 +94,7 @@ class CqVtkDirective(Directive, Cqgi):
         "width": directives.length_or_percentage_or_unitless,
     }
 
-    def run(self):
+    def run(self) -> list[Any]:
         """Generate VTK render of CadQuery model."""
         options = self.options
         state_machine = self.state_machine
@@ -152,7 +153,7 @@ class CqVtkDirective(Directive, Cqgi):
 class LegacyCqSvgDirective(CqSvgDirective):
     """Legacy SVG directive."""
 
-    def run(self):
+    def run(self) -> list[Any]:
         """Deprecate legacy SVG directive."""
         logger.info(
             "use of the cq_plot directive is deprecated, "
@@ -164,7 +165,7 @@ class LegacyCqSvgDirective(CqSvgDirective):
 class LegacyCqVtkDirective(CqVtkDirective):
     """Legacy VTK directive."""
 
-    def run(self):
+    def run(self) -> list[Any]:
         """Deprecate legacy VTK directive."""
         logger.info(
             "direct use of the cadquery directive is deprecated, "

@@ -2,7 +2,9 @@
 
 from json import dumps
 
-from cadquery import Assembly, Color, Sketch, cqgi, exporters
+from cadquery import Assembly, Color, Shape, Sketch, exporters
+from cadquery.cqgi import BuildResult  # type: ignore[attr-defined]
+from cadquery.cqgi import parse as cqgi_parse  # type: ignore[attr-defined]
 from cadquery.occ_impl.assembly import toJSON as cq_assembly_toJSON
 
 from .common import DEFAULT_COLOR
@@ -12,9 +14,9 @@ class Cqgi:
     """Execute script source using CQGI."""
 
     @staticmethod
-    def _cqgi_parse(script_source: str):
+    def _cqgi_parse(script_source: str) -> BuildResult:
         """Execute script source using CQGI."""
-        result = cqgi.parse(script_source).build()
+        result = cqgi_parse(script_source).build()
 
         if not result.success:
             raise result.exception
@@ -26,7 +28,7 @@ class Exporter:
     """Exporter base class."""
 
     @staticmethod
-    def _select_shape(result, select: str):
+    def _select_shape(result: BuildResult, select: str):
         """Select shape from CQGI environment."""
         if result.first_result:
             return result.first_result.shape
@@ -37,7 +39,7 @@ class Exporter:
 class VtkJsonExporter(Exporter):
     """Export CadQuery assembly as VTK.js JSON."""
 
-    def __init__(self, result, select: str):
+    def __init__(self, result: BuildResult, select: str):
         self.result = result
         self.select = select
 
@@ -53,7 +55,7 @@ class VtkJsonExporter(Exporter):
         return vtk_json
 
     @staticmethod
-    def _to_assembly(shape, color: list[float]):
+    def _to_assembly(shape: Shape, color: list[float]) -> Assembly:
         """Convert shape to assembly."""
         if isinstance(shape, Assembly):
             return shape
@@ -66,7 +68,7 @@ class VtkJsonExporter(Exporter):
 class SvgExporter(Exporter):
     """Export CadQuery object as SVG."""
 
-    def __init__(self, result, select: str):
+    def __init__(self, result: BuildResult, select: str) -> None:
         """
         Initialise exporter.
 
@@ -76,7 +78,7 @@ class SvgExporter(Exporter):
         self.result = result
         self.select = select
 
-    def __call__(self):
+    def __call__(self) -> str:
         """Export CadQuery object as SVG."""
         shape = self._select_shape(self.result, self.select)
         compound = exporters.toCompound(shape)
