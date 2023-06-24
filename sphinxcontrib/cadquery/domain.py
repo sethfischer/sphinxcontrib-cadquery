@@ -84,6 +84,7 @@ def set_svg_image_uri(app, doctree):
 
 def export_file_name(source: str) -> Path:
     """Create file name for CadQuery export."""
+
     source_hash = sha1(source.encode()).hexdigest()[:8]
 
     return Path(source_hash).with_suffix(".svg")
@@ -107,17 +108,32 @@ def export_svg(source: str, select: str):
 class CqDirective(Directive, Cqgi):
     """CadQuery directive parent class."""
 
-    @staticmethod
-    def _error_node(message: str, detail: str):
-        node = nodes.paragraph()
-        node.append(nodes.strong(text=message))
-        node.append(nodes.inline(text=detail))
+    msg_caption_node = "First node must be either a paragraph or empty comment."
+    msg_source_node = "Second node must be either a code-block or literalinclude."
+    msg_two_or_more = "Directive {name} must be composed of 2 or more nodes."
 
-        return node
+    def unexpected_content_error(self, message: Optional[str] = None):
+        """Unexpected content error."""
+
+        if message is None:
+            message = (
+                f"{self.msg_two_or_more.format(name=self.name)}\n"
+                f"{self.msg_caption_node}\n"
+                f"{self.msg_source_node}\n"
+            )
+
+        error = self.state_machine.reporter.error(
+            message,
+            nodes.literal_block(self.block_text, self.block_text),
+            line=self.lineno,
+        )
+
+        return error
 
     @staticmethod
-    def _include_source(option_value: Optional[str], config_value: bool) -> bool:
+    def include_source(option_value: Optional[str], config_value: bool) -> bool:
         """Determine if source code listing should be included in output."""
+
         if option_value == "no":
             include_source = False
         elif option_value == "yes":
@@ -193,12 +209,11 @@ class CqSvgDirective(CqDirective):
 
         env = self.state.document.settings.env
 
-        include_source = self._include_source(
+        include_source = self.include_source(
             include_source_value, env.config.cadquery_include_source
         )
 
         caption_node = None
-        source_node = None
         notes_nodes = None
 
         figure_node = nodes.figure()
@@ -212,46 +227,31 @@ class CqSvgDirective(CqDirective):
         if align:
             figure_node["align"] = align
 
-        if self.content:
-            node = nodes.Element()  # anonymous container for parsing
-            self.state.nested_parse(self.content, self.content_offset, node)
+        node = nodes.Element()  # anonymous container for parsing
+        self.state.nested_parse(self.content, self.content_offset, node)
 
-            if len(node) >= 2:
-                if isinstance(node[0], nodes.paragraph):
-                    caption_node = node[0]
-                elif not isinstance(node[0], nodes.comment):
-                    error = self.state_machine.reporter.error(
-                        "Model caption must be a paragraph or empty comment.",
-                        nodes.literal_block(self.block_text, self.block_text),
-                        line=self.lineno,
-                    )
-                    return [figure_node, error]
+        if len(node) < 2:
+            return [figure_node, self.unexpected_content_error()]
 
-                if isinstance(node[1], nodes.literal_block):
-                    source_node = node[1]
-                    source = node[1].astext()
-                else:
-                    error = self.state_machine.reporter.error(
-                        "Second node must be a code-block or literalinclude.",
-                        nodes.literal_block(self.block_text, self.block_text),
-                        line=self.lineno,
-                    )
-                    return [figure_node, error]
-            else:
-                error = self.state_machine.reporter.error(
-                    (
-                        f"Directive {self.name} must be composed of 2 or more nodes. "
-                        "The first being a caption which is either a paragraph or "
-                        "empty comment. "
-                        "The second being a either a code-block or a literalinclude."
-                    ),
-                    nodes.literal_block(self.block_text, self.block_text),
-                    line=self.lineno,
-                )
-                return [figure_node, error]
+        if isinstance(node[0], nodes.paragraph):
+            caption_node = node[0]
+        elif not isinstance(node[0], nodes.comment):
+            return [
+                figure_node,
+                self.unexpected_content_error(self.msg_caption_node),
+            ]
 
-            if len(node) >= 3:
-                notes_nodes = node[2:]
+        if isinstance(node[1], nodes.literal_block):
+            source_node = node[1]
+            source = node[1].astext()
+        else:
+            return [
+                figure_node,
+                self.unexpected_content_error(self.msg_source_node),
+            ]
+
+        if len(node) >= 3:
+            notes_nodes = node[2:]
 
         image_node = nodes.image(source, alt=alt, uri="data:image/svg+xml;")
         image_node["classes"].extend(["cadquery-container-model"])
@@ -313,12 +313,11 @@ class CqVtkDirective(CqDirective):
 
         env = self.state.document.settings.env
 
-        include_source = self._include_source(
+        include_source = self.include_source(
             include_source_value, env.config.cadquery_include_source
         )
 
         caption_node = None
-        source_node = None
         notes_nodes = None
 
         figure_node = nodes.figure()
@@ -332,48 +331,33 @@ class CqVtkDirective(CqDirective):
         if align:
             figure_node["align"] = align
 
-        if self.content:
-            node = nodes.Element()  # anonymous container for parsing
-            self.state.nested_parse(self.content, self.content_offset, node)
+        node = nodes.Element()  # anonymous container for parsing
+        self.state.nested_parse(self.content, self.content_offset, node)
 
-            if len(node) >= 2:
-                if isinstance(node[0], nodes.paragraph):
-                    caption_node = node[0]
-                elif not isinstance(node[0], nodes.comment):
-                    error = self.state_machine.reporter.error(
-                        "Model caption must be a paragraph or empty comment.",
-                        nodes.literal_block(self.block_text, self.block_text),
-                        line=self.lineno,
-                    )
-                    return [figure_node, error]
+        if len(node) < 2:
+            return [figure_node, self.unexpected_content_error()]
 
-                if isinstance(node[1], nodes.literal_block):
-                    source_node = node[1]
-                    source = node[1].astext()
-                else:
-                    error = self.state_machine.reporter.error(
-                        "Second node must be a code-block or literalinclude.",
-                        nodes.literal_block(self.block_text, self.block_text),
-                        line=self.lineno,
-                    )
-                    return [figure_node, error]
-            else:
-                error = self.state_machine.reporter.error(
-                    (
-                        f"Directive {self.name} must be composed of 2 or more nodes. "
-                        "The first being a caption which is either a paragraph or "
-                        "empty comment. "
-                        "The second being a either a code-block or a literalinclude."
-                    ),
-                    nodes.literal_block(self.block_text, self.block_text),
-                    line=self.lineno,
-                )
-                return [figure_node, error]
+        if isinstance(node[0], nodes.paragraph):
+            caption_node = node[0]
+        elif not isinstance(node[0], nodes.comment):
+            return [
+                figure_node,
+                self.unexpected_content_error(self.msg_caption_node),
+            ]
 
-            if len(node) >= 3:
-                notes_nodes = node[2:]
+        if isinstance(node[1], nodes.literal_block):
+            source_node = node[1]
+            source = node[1].astext()
+        else:
+            return [
+                figure_node,
+                self.unexpected_content_error(self.msg_source_node),
+            ]
 
-        figure_node += self._vtk_container_node(source, height)
+        if len(node) >= 3:
+            notes_nodes = node[2:]
+
+        figure_node += self.vtk_container_node(source, height)
 
         figure_node = self.populate_figure_node(
             figure_node,
@@ -385,7 +369,7 @@ class CqVtkDirective(CqDirective):
 
         return [figure_node]
 
-    def _vtk_container_node(self, source: str, height: str):
+    def vtk_container_node(self, source: str, height: str):
         """VTK.js model container."""
 
         try:
@@ -396,7 +380,7 @@ class CqVtkDirective(CqDirective):
 
             logger.error(error_text + detail_text)
 
-            return [self._error_node(error_text, detail_text)]
+            return [error_node(error_text, detail_text)]
 
         vtk_json = VtkJsonExporter(result, self.options.get("select", "result"))
         color = self.options.get("color", DEFAULT_COLOR)
