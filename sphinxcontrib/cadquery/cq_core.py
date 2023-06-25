@@ -17,9 +17,10 @@ from typing import Any
 
 from cadquery import exporters
 from docutils import nodes
-from docutils.parsers.rst import Directive, directives
+from docutils.parsers.rst import directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.util import logging
+from sphinx.util.docutils import SphinxDirective
 
 from .common import DEFAULT_COLOR
 from .cqgi import Cqgi, VtkJsonExporter
@@ -33,7 +34,7 @@ _JINJA_ENV = Environment(
 )
 
 
-class CqSvgDirective(Directive, Cqgi):
+class CqSvgDirective(SphinxDirective, Cqgi):
     """CadQuery SVG directive."""
 
     has_content = True
@@ -44,19 +45,15 @@ class CqSvgDirective(Directive, Cqgi):
     def run(self) -> list[Any]:
         """Generate SVG render of CadQuery model."""
 
-        content = self.content
-        state_machine = self.state_machine
-        env = self.state.document.settings.env
-
         self.assert_has_content()
-        script_source = "\n".join(content)
+        script_source = "\n".join(self.content)
 
         try:
             result = self._cqgi_parse(script_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
-            state_machine.reporter.error(message)
+            self.state_machine.reporter.error(message)
             return [p]
 
         try:
@@ -69,19 +66,19 @@ class CqSvgDirective(Directive, Cqgi):
         svg_document = exporters.getSVG(compound)
 
         rst_markup = _JINJA_ENV.get_template("cadquery-svg.rst.jinja").render(
-            include_source=env.config.cadquery_include_source,
+            include_source=self.config.cadquery_include_source,
             script_source=script_source,
             svg_document=svg_document,
         )
 
-        state_machine.insert_input(
-            rst_markup.splitlines(), state_machine.input_lines.source(0)
+        self.state_machine.insert_input(
+            rst_markup.splitlines(), self.state_machine.input_lines.source(0)
         )
 
         return []
 
 
-class CqVtkDirective(Directive, Cqgi):
+class CqVtkDirective(SphinxDirective, Cqgi):
     """CadQuery VTK directive."""
 
     has_content = True
@@ -99,8 +96,6 @@ class CqVtkDirective(Directive, Cqgi):
         """Generate VTK render of CadQuery model."""
 
         options = self.options
-        state_machine = self.state_machine
-        env = self.state.document.settings.env
 
         script_source = self._script_source()
 
@@ -109,14 +104,14 @@ class CqVtkDirective(Directive, Cqgi):
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
-            state_machine.reporter.error(message)
+            self.state_machine.reporter.error(message)
             return [p]
 
         color = options.get("color", DEFAULT_COLOR)
         vtk_json = VtkJsonExporter(result, options.get("select", "result"))
 
         rst_markup = _JINJA_ENV.get_template("cadquery-vtk.rst.jinja").render(
-            include_source=env.config.cadquery_include_source,
+            include_source=self.config.cadquery_include_source,
             script_source=script_source,
             vtk_json=vtk_json(color=color),
             element="document.currentScript.parentNode",
@@ -125,8 +120,8 @@ class CqVtkDirective(Directive, Cqgi):
             height=options.get("height", "500px"),
         )
 
-        state_machine.insert_input(
-            rst_markup.splitlines(), state_machine.input_lines.source(0)
+        self.state_machine.insert_input(
+            rst_markup.splitlines(), self.state_machine.input_lines.source(0)
         )
 
         return []
@@ -134,10 +129,8 @@ class CqVtkDirective(Directive, Cqgi):
     def _script_source(self):
         """Get script source."""
 
-        env = self.state.document.settings.env
-
         if len(self.arguments):
-            path_name = Path(env.app.builder.srcdir) / self.arguments[0]
+            path_name = Path(self.env.app.builder.srcdir) / self.arguments[0]
             path_name = path_name.resolve()
             if not path_name.is_file():
                 logger.error(f"File does not exist: {path_name}")

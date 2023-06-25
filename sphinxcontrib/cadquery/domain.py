@@ -7,11 +7,12 @@ from typing import Any, Optional, Union
 
 from docutils import nodes
 from docutils.nodes import Node
-from docutils.parsers.rst import Directive, directives
+from docutils.parsers.rst import directives
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sphinx.application import Sphinx
 from sphinx.domains import Domain
 from sphinx.util import logging
+from sphinx.util.docutils import SphinxDirective
 
 from .common import DEFAULT_COLOR
 from .cqgi import Cqgi, SvgExporter, VtkJsonExporter
@@ -107,7 +108,7 @@ def export_svg(source: str, select: str) -> str:
     return svg_document
 
 
-class CqDirective(Directive, Cqgi):
+class CqDirective(SphinxDirective, Cqgi):
     """CadQuery directive parent class."""
 
     msg_caption_node = "First node must be either a paragraph or empty comment."
@@ -209,10 +210,8 @@ class CqSvgDirective(CqDirective):
         else:
             inline_uri = False
 
-        env = self.state.document.settings.env
-
         include_source = self.include_source(
-            include_source_value, env.config.cadquery_include_source
+            include_source_value, self.config.cadquery_include_source
         )
 
         caption_node = None
@@ -325,10 +324,8 @@ class CqVtkDirective(CqDirective):
         height = self.options.pop("height", "500px")
         include_source_value = self.options.pop("include-source", None)
 
-        env = self.state.document.settings.env
-
         include_source = self.include_source(
-            include_source_value, env.config.cadquery_include_source
+            include_source_value, self.config.cadquery_include_source
         )
 
         caption_node = None
