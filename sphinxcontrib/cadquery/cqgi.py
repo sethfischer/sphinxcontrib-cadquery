@@ -16,6 +16,7 @@ class Cqgi:
     @staticmethod
     def _cqgi_parse(script_source: str) -> BuildResult:
         """Execute script source using CQGI."""
+
         result = cqgi_parse(script_source).build()
 
         if not result.success:
@@ -30,6 +31,7 @@ class Exporter:
     @staticmethod
     def _select_shape(result: BuildResult, select: str):
         """Select shape from CQGI environment."""
+
         if result.first_result:
             return result.first_result.shape
 
@@ -45,6 +47,7 @@ class VtkJsonExporter(Exporter):
 
     def __call__(self, *, color=None):
         """Export CadQuery assembly as VTK.js JSON."""
+
         if color is None:
             color = DEFAULT_COLOR
 
@@ -57,6 +60,7 @@ class VtkJsonExporter(Exporter):
     @staticmethod
     def _to_assembly(shape: Shape, color: list[float]) -> Assembly:
         """Convert shape to assembly."""
+
         if isinstance(shape, Assembly):
             return shape
         elif isinstance(shape, Sketch):
@@ -75,11 +79,13 @@ class SvgExporter(Exporter):
         :param result: CQGI result
         :param select: name of object to select from CQGI result
         """
+
         self.result = result
         self.select = select
 
     def __call__(self) -> str:
         """Export CadQuery object as SVG."""
+
         shape = self._select_shape(self.result, self.select)
         compound = exporters.toCompound(shape)
 
