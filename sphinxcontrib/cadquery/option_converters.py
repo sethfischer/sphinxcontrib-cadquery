@@ -43,6 +43,6 @@ def rgba(argument):
         entries = argument.split()
 
     if len(entries) != 4:
-        raise ValueError("invalid value; " "RGBA color must consist of 4 values")
+        raise ValueError("invalid value; RGBA color must consist of 4 values")
 
     return [color_channel_value(entry) for entry in entries]
