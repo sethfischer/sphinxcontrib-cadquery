@@ -256,7 +256,6 @@ class CqSvgDirective(CqDirective):
             notes_nodes = node[2:]
 
         image_node = nodes.image(source, alt=alt, uri="data:image/svg+xml;")
-        image_node["classes"].extend(["cadquery-container-model"])
 
         if isinstance(image_node, nodes.system_message):
             return [image_node]
@@ -270,7 +269,12 @@ class CqSvgDirective(CqDirective):
             "source": source,
         }
 
-        figure_node += image_node
+        view_container = nodes.container()
+        view_container["classes"].extend(["cadquery-container-model"])
+        view_container += image_node
+        view_container += self.svg_help_node()
+
+        figure_node += view_container
 
         figure_node = self.populate_figure_node(
             figure_node,
@@ -281,6 +285,14 @@ class CqSvgDirective(CqDirective):
         )
 
         return [figure_node]
+
+    @staticmethod
+    def svg_help_node() -> Node:
+        """SVG help dropdown node."""
+
+        html = _JINJA_ENV.get_template("svg-dropdown.html.jinja").render()
+
+        return nodes.raw("", html, format="html")
 
 
 class CqVtkDirective(CqDirective):
@@ -394,11 +406,11 @@ class CqVtkDirective(CqDirective):
         )
         vtk_script_node = nodes.raw("", script_element, format="html")
 
-        container = nodes.container()
-        container["classes"].extend(["cadquery-container-model"])
-        container += vtk_script_node
+        view_container = nodes.container()
+        view_container["classes"].extend(["cadquery-container-model"])
+        view_container += vtk_script_node
 
-        return container
+        return view_container
 
 
 class CadQueryDomain(Domain):
