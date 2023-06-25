@@ -49,7 +49,7 @@ class CqSvgDirective(SphinxDirective, Cqgi):
         script_source = "\n".join(self.content)
 
         try:
-            result = self._cqgi_parse(script_source)
+            result = self.cqgi_parse(script_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))
@@ -100,7 +100,7 @@ class CqVtkDirective(SphinxDirective, Cqgi):
         script_source = self._script_source()
 
         try:
-            result = self._cqgi_parse(script_source)
+            result = self.cqgi_parse(script_source)
         except Exception as err:
             message = f"CQGI error in {self.name} directive: {err}."
             p = nodes.paragraph("", "", nodes.Text(message))

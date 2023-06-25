@@ -98,7 +98,7 @@ def export_svg(source: str, select: str) -> str:
 
     try:
         parser = Cqgi()
-        result = parser._cqgi_parse(source)
+        result = parser.cqgi_parse(source)
     except Exception as err:
         raise err
 
@@ -384,7 +384,7 @@ class CqVtkDirective(CqDirective):
         """VTK.js model container."""
 
         try:
-            result = self._cqgi_parse(source)
+            result = self.cqgi_parse(source)
         except Exception as err:
             error_text = f"CQGI error in {self.name} directive: "
             detail_text = f"{err}."
