@@ -14,7 +14,7 @@ class Cqgi:
     """Execute script source using CQGI."""
 
     @staticmethod
-    def _cqgi_parse(script_source: str) -> BuildResult:
+    def cqgi_parse(script_source: str) -> BuildResult:
         """Execute script source using CQGI."""
 
         result = cqgi_parse(script_source).build()
