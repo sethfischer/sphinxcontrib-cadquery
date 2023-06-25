@@ -5,11 +5,13 @@ from docutils.parsers.rst import directives
 
 def align(argument):
     """Sphinx directive align option."""
+
     return directives.choice(argument, ("left", "center", "right"))
 
 
 def yes_no(argument):
     """Sphinx directive yes/no option."""
+
     return directives.choice(argument, ("yes", "no"))
 
 
@@ -18,6 +20,7 @@ def color_channel_value(argument):
 
     Validates that argument is from 0 to 1, with any fractional value in between.
     """
+
     value = float(argument)
     if value < 0 or value > 1:
         raise ValueError(
@@ -33,6 +36,7 @@ def rgba(argument):
     Color in RGBA notation defined as a space- or comma-separated list of channel
     values.
     """
+
     if "," in argument:
         entries = argument.split(",")
     else:

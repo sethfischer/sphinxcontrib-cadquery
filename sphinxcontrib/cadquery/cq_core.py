@@ -43,6 +43,7 @@ class CqSvgDirective(Directive, Cqgi):
 
     def run(self) -> list[Any]:
         """Generate SVG render of CadQuery model."""
+
         content = self.content
         state_machine = self.state_machine
         env = self.state.document.settings.env
@@ -96,6 +97,7 @@ class CqVtkDirective(Directive, Cqgi):
 
     def run(self) -> list[Any]:
         """Generate VTK render of CadQuery model."""
+
         options = self.options
         state_machine = self.state_machine
         env = self.state.document.settings.env
@@ -131,6 +133,7 @@ class CqVtkDirective(Directive, Cqgi):
 
     def _script_source(self):
         """Get script source."""
+
         env = self.state.document.settings.env
 
         if len(self.arguments):
@@ -155,6 +158,7 @@ class LegacyCqSvgDirective(CqSvgDirective):
 
     def run(self) -> list[Any]:
         """Deprecate legacy SVG directive."""
+
         logger.info(
             "use of the cq_plot directive is deprecated, "
             'replace ".. cq_plot::" with ".. cadquery-svg::"'
@@ -167,6 +171,7 @@ class LegacyCqVtkDirective(CqVtkDirective):
 
     def run(self) -> list[Any]:
         """Deprecate legacy VTK directive."""
+
         logger.info(
             "direct use of the cadquery directive is deprecated, "
             'replace ".. cadquery::" with ".. cadquery-vtk::"'
