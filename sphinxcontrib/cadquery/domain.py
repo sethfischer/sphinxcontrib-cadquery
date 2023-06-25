@@ -177,7 +177,7 @@ class CqDirective(Directive, Cqgi):
 class CqSvgDirective(CqDirective):
     """CadQuery SVG directive.
 
-    Renders a SVG export wrapped in a HTML figure element.
+    Renders an SVG export wrapped in an HTML figure element.
     """
 
     required_arguments = 0
@@ -298,7 +298,7 @@ class CqSvgDirective(CqDirective):
 class CqVtkDirective(CqDirective):
     """CadQuery VTK directive.
 
-    Renders model wrapped in a HTML figure element.
+    Renders model wrapped in an HTML figure element.
     """
 
     required_arguments = 0
