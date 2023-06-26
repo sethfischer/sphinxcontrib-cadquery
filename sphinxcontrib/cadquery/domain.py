@@ -16,7 +16,7 @@ from sphinx.util.docutils import SphinxDirective
 
 from .common import DEFAULT_COLOR
 from .cqgi import Cqgi, SvgExporter, VtkJsonExporter
-from .option_converters import align, rgba, yes_no
+from .option_converters import horizontal_align, rgba, yes_no
 
 logger = logging.getLogger(__name__)
 
@@ -185,7 +185,7 @@ class CqSvgDirective(CqDirective):
     optional_arguments = 0
 
     option_spec = {
-        "align": align,
+        "align": horizontal_align,
         "alt": directives.unchanged,
         "figclass": directives.class_option,
         "figwidth": directives.length_or_percentage_or_unitless,
@@ -304,7 +304,7 @@ class CqVtkDirective(CqDirective):
     optional_arguments = 0
 
     option_spec = {
-        "align": align,
+        "align": horizontal_align,
         "color": rgba,
         "figclass": directives.class_option,
         "figwidth": directives.length_or_percentage_or_unitless,

@@ -3,7 +3,7 @@
 from docutils.parsers.rst import directives
 
 
-def align(argument):
+def horizontal_align(argument):
     """Sphinx directive align option."""
 
     return directives.choice(argument, ("left", "center", "right"))
