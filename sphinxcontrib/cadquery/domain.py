@@ -271,7 +271,7 @@ class CqSvgDirective(CqDirective):
         view_container = nodes.container()
         view_container["classes"].extend(["cadquery-container-model"])
         view_container += image_node
-        view_container += self.svg_help_node()
+        view_container += self.svg_overlay_node()
 
         figure_node += view_container
 
@@ -286,10 +286,10 @@ class CqSvgDirective(CqDirective):
         return [figure_node]
 
     @staticmethod
-    def svg_help_node() -> Node:
-        """SVG help dropdown node."""
+    def svg_overlay_node() -> Node:
+        """SVG overlay node."""
 
-        html = _JINJA_ENV.get_template("svg-dropdown.html.jinja").render()
+        html = _JINJA_ENV.get_template("svg-overlay.html.jinja").render()
 
         return nodes.raw("", html, format="html")
 
