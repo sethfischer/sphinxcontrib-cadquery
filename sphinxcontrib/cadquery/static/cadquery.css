@@ -26,7 +26,7 @@ button.cadquery-credit {
     font-size: 75%;
 }
 
-div.cadquery-help-dropdown {
+div.cadquery-overlay {
     color: black;
     float: right;
     margin: 0;
@@ -37,7 +37,7 @@ div.cadquery-help-dropdown {
     z-index: 100;
 }
 
-.cadquery-help-dropdown-content {
+.cadquery-overlay-dropdown-content {
     background-color: #f9f9f9;
     display: none;
     min-width: 100%;
@@ -46,34 +46,34 @@ div.cadquery-help-dropdown {
     z-index: 1;
 }
 
-.cadquery-help-dropdown-content dl,
-.cadquery-help-dropdown-content dl dd,
-.cadquery-help-dropdown-content p {
+.cadquery-overlay-dropdown-content dl,
+.cadquery-overlay-dropdown-content dl dd,
+.cadquery-overlay-dropdown-content p {
     margin: 1px;
 }
-.cadquery-help-dropdown-content p.footer {
+.cadquery-overlay-dropdown-content p.footer {
         font-size: 75%;
 }
 
-.cadquery-help-dropdown:hover
-.cadquery-help-dropdown-content {
+.cadquery-overlay:hover
+.cadquery-overlay-dropdown-content {
     display: block;
 }
 
-.cadquery-help-dropdown:hover button.cadquery-credit {
+.cadquery-overlay:hover button.cadquery-credit {
     background-color: #2980b9;
 }
 
-.cadquery-help-dropdown-content dl {
+.cadquery-overlay-dropdown-content dl {
     display: grid;
     grid-template-columns: 40% auto;
 }
 
-.cadquery-help-dropdown-content dl dt {
+.cadquery-overlay-dropdown-content dl dt {
     grid-column: 1;
 }
 
-.cadquery-help-dropdown-content dl dd {
+.cadquery-overlay-dropdown-content dl dd {
     grid-column: 2;
 }
 
