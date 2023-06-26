@@ -44,14 +44,14 @@ def setup(app: Sphinx) -> ExtensionMetadata:
             js_destination = app_outdir_dist / Path(filename).name
 
             app.add_js_file(
-                str(js_destination.relative_to(app_static_directory)),
+                js_destination.relative_to(app_static_directory).as_posix(),
                 priority=metadata["priority"],
             )
 
             shutil.copyfile(js_source, js_destination)
 
         css_destination = app_static_directory / "cadquery.css"
-        app.add_css_file(str(css_destination.relative_to(app_static_directory)))
+        app.add_css_file(css_destination.relative_to(app_static_directory).as_posix())
         shutil.copyfile(_ROOT_DIR / "static/cadquery.css", css_destination)
 
         setattr(app, "_sphinxcontrib_cadquery_assets_installed", True)
