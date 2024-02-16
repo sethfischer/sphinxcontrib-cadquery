@@ -61,7 +61,7 @@ ipython = ">=7.31.1"
 jinja2 = ">=3.0"
 
 [tool.poetry.group.dev.dependencies]
-cadquery = "^2.3.1"
+cadquery = "^2.4.0"
 casadi = {version = "^3.5.6rc2", allow-prereleases = true}
 
 black = "^23.3.0"
