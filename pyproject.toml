@@ -42,6 +42,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python",
     "Programming Language :: Python",
@@ -54,7 +55,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/sethfischer/sphinxcontrib-cadquery/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"
+python = ">=3.9,<3.12"
 
 Sphinx = ">=5.3.0,<7.0.0"
 ipython = ">=7.31.1"
@@ -101,7 +102,7 @@ profile = "black"
 multi_line_output = 3
 
 [tool.mypi]
-python_version = "3.9"
+python_version = "3.11"
 packages = "sphinxcontrib"
 
 [build-system]
