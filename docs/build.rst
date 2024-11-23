@@ -46,6 +46,18 @@ The built release can be install into a project as follows.
     pip install path/to/dist/sphinxcontrib_cadquery-0.1.0.tar.gz
 
 
+Publish release
+---------------
+
+.. code-block:: text
+
+    git checkout main
+    cz bump
+    git push origin main --tags
+    make poetry-build
+    poetry publish
+
+
 .. _`Git`: https://git-scm.com/
 .. _`Python`: https://www.python.org/
 .. _`Poetry`: https://python-poetry.org/
