@@ -18,9 +18,9 @@ Build
 
     git clone https://github.com/sethfischer/sphinxcontrib-cadquery.git
     cd sphinxcontrib-cadquery
-    poetry env use python3.11
+    poetry env use python3.12
     poetry install
-    poetry shell
+    eval $(poetry env activate)
     npm clean-install
     make npm-build poetry-build
 

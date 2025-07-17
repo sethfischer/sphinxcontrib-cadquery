@@ -55,7 +55,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/sethfischer/sphinxcontrib-cadquery/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.9,<3.14"
 
 Sphinx = ">=6,<=8"
 ipython = ">=7.31.1"
@@ -63,7 +63,7 @@ jinja2 = ">=3.0"
 
 [tool.poetry.group.dev.dependencies]
 cadquery = "^2.4.0"
-cadquery-ocp = "7.7.0"
+cadquery-ocp = "7.7.2"
 casadi = {version = "^3.5.6rc2", allow-prereleases = true}
 numpy = "^1.26.4"  # https://github.com/CadQuery/cadquery/issues/1616
 
