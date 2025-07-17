@@ -27,8 +27,8 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 intersphinx_mapping = {
-    "cadquery-latest": ("https://cadquery.readthedocs.io/en/latest/", None),
-    "sphinx-master": ("https://www.sphinx-doc.org/en/master/", None),
+    "cadquery-latest": ("https://cadquery.readthedocs.io/en/latest", None),
+    "sphinx-master": ("https://www.sphinx-doc.org/en/master", None),
 }
 
 
