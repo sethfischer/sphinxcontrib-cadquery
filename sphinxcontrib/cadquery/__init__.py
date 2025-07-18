@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import TypedDict
 
 from sphinx.application import Sphinx
+from sphinx.util import logging
 
 from .cq_core import (
     CqSvgDirective,
@@ -32,6 +33,7 @@ class ExtensionMetadata(TypedDict):
 
 def setup(app: Sphinx) -> ExtensionMetadata:
     """Sphinx setup."""
+    logger = logging.getLogger(__name__)
     assets_installed = getattr(app, "_sphinxcontrib_cadquery_assets_installed", False)
 
     if not assets_installed:
@@ -48,6 +50,7 @@ def setup(app: Sphinx) -> ExtensionMetadata:
                 priority=metadata["priority"],
             )
 
+            logger.info(f"Copying {js_source} to {js_destination}")
             shutil.copyfile(js_source, js_destination)
 
         css_destination = app_static_directory / "cadquery.css"
