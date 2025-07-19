@@ -6,7 +6,7 @@ Prerequisites
 -------------
 
 * `Git`_ version control system.
-* `Python`_ >=3.9, and python-venv.
+* `Python`_ >=3.9.
 * `Poetry`_ for Python dependency management and building source and wheel archives.
 * `node.js`_ and npm for JavaScript dependency management.
 
