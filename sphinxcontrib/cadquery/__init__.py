@@ -15,7 +15,7 @@ from .cq_core import (
 )
 from .domain import CadQueryDomain, set_svg_image_uri
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 _ROOT_DIR = Path(__file__).absolute().parent
 
