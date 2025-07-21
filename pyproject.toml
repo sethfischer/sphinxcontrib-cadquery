@@ -7,8 +7,8 @@ packages = [
 ]
 include = [
     "CHANGELOG.md",
-    "sphinxcontrib/cadquery/static/dist/vtk-lite.js*",
-    "sphinxcontrib/cadquery/static/render.js",
+    { path = "sphinxcontrib/cadquery/static/dist/vtk-lite.js*", format = ["sdist", "wheel"] },
+    { path = "sphinxcontrib/cadquery/static/render.js", format = ["sdist", "wheel"] },
 ]
 authors = [
     "Seth Fischer <seth@fischer.nz>",
